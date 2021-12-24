@@ -1,5 +1,7 @@
 from UtilLib.Read_annos_mat import read_annos_to_np
 from ModelLib.Model1 import Model1
+from ModelLib.resnet101 import RenNet101_head
+from ModelLib.resnet import resnet50
 from DatasetLib.Dataset1 import Dataset1
 
 import torch
@@ -18,7 +20,7 @@ if not os.path.exists(checkpointDir):
 
 # 超参数
 batch_size = 10
-learning_rate = 3e-5
+learning_rate = 0.01
 epoches = 10
 print("batch_size= ", batch_size)
 print("learning_rate= ", learning_rate)
@@ -26,7 +28,7 @@ print("epoches= ", epoches)
 
 
 # 模型
-model = Model1()
+model = resnet50()
 # model.load_state_dict(torch.load('./checkpoint/xx.ckpt')['net_state_dict'], strict=False)
 model = model.cuda() # 模型放GPU上；
 
@@ -48,9 +50,10 @@ loss_fn = torch.nn.CrossEntropyLoss()
 optimizer = torch.optim.Adam(params=model.parameters(), lr=learning_rate)
 for epoch in range(epoches):
     model.train()
+    totalLoss = 0
     for step, data in enumerate(trainLoader, start=0):
-        data=data.cuda()
         imgs, labels = data
+        
         optimizer.zero_grad()
         labels_predict = model(imgs)
         loss = loss_fn(labels_predict, labels)
@@ -58,7 +61,8 @@ for epoch in range(epoches):
         optimizer.step()
         
         rate = (step + 1) / len(trainLoader)
-        print("\repoch:%s train loss:%3.0f%%:%.4f" % (epoch, int(rate * 100), loss), end="  ")
+        totalLoss += loss
+        print("\repoch:%s train loss:%3.0f%%:%.4f, totalLoss = %.4f" % (epoch, int(rate * 100), loss, totalLoss/(step+1)), end="  ")
     
     # 验证
     model.eval()
@@ -66,20 +70,19 @@ for epoch in range(epoches):
         label_all = []
         label_predict_all = []
         for data in validLoader:
-            data=data.cuda()
             imgs, labels = data
             labels_predict = model(imgs)
             
             labels = labels.cpu().numpy()
-            labels_predict = labels_predict.cpu().numpy()
+            labels_predict = np.argmax(labels_predict.cpu().numpy(), axis = 1)
             for i in range(labels.shape[0]):
                 label_all.append(labels[i])
                 label_predict_all.append(labels_predict[i])
         label_all = np.array(label_all)
         label_predict_all = np.array(label_predict_all)
         
-        # TODO: 对label_all和label_predict_all计算评价指标
-            
+        acc = sum(label_all == label_predict_all)/len(label_all)
+        print('acc= ', acc)
             # for img in imgs:
             #     img=img.cpu().numpy()
             #     img = img.transpose([1,2,0]) # 3 * w * h -> w * h * 3

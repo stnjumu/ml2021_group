@@ -21,19 +21,23 @@ class Dataset1(torchData.Dataset):
     def __getitem__(self, index):
         Path = os.path.join(self.dir, self.data[index][-1]) # dir + '00001.jpg'
         bgr = cv2.imread(Path)
-        x = [self.data[index][0], self.data[index][2]]
-        y = [self.data[index][1], self.data[index][3]]
+        x = [int(self.data[index][0]), int(self.data[index][2])]
+        y = [int(self.data[index][1]), int(self.data[index][3])]
         label = self.data[index][4]
         
         # 对img_full各种处理，得img
         rgb = cv2.cvtColor(bgr,cv2.COLOR_RGB2BGR)
         # print(len(rgb.shape), rgb.shape, type(label))
-        img = cv2.resize(rgb, (256, 256))
+        img = cv2.resize(rgb[y[0]:y[1],x[0]:x[1],:], (256, 256))
         # print(len(img.shape), img.shape, type(label))
         
         assert(len(img.shape)==3) # 注意有灰度图
         img = img.transpose([2,0,1]) # 3 * w * h
-        return img, int(label)
+        img = torch.from_numpy(img).float()/255
+        label = torch.from_numpy(np.array(int(label))).long()-1
+        img = img.cuda()
+        label = label.cuda()
+        return img, label
     
     def __len__(self):
         return np.shape(self.data)[0]
@@ -59,5 +63,5 @@ if __name__ == '__main__':
             plt.figure()
             plt.imshow(img)
             plt.show()
-        break
+        # break
     print("测试结束！")
