@@ -2,6 +2,15 @@ import scipy.io as scio
 import numpy as np
 
 def read_annos_to_np(Path):
+    """读取cars_train_annos.mat或cars_test_annos.mat文件，转换为二维numpy数组
+
+    Args:
+        Path (str): 文件路径
+
+    Returns:
+        numpy二维数组:  训练集: 8144*6
+                        测试集: 8041*5
+    """
     cars_annos = scio.loadmat(Path)
     annotations = cars_annos['annotations'][0]
     for annotation in annotations:

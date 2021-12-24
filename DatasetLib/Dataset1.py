@@ -1,3 +1,5 @@
+# 数据集示例
+# 只是读取图片，裁剪后resize到256*256
 import torch
 import torch.utils.data as torchData
 import matplotlib.pyplot as plt
@@ -36,6 +38,8 @@ class Dataset1(torchData.Dataset):
     def __len__(self):
         return np.shape(self.data)[0]
 
+
+# 测试Dataset类：
 import sys 
 # print(sys.path)
 sys.path.append(".")
@@ -46,25 +50,11 @@ if __name__ == '__main__':
     img_dir = './dataset/cars_train'
     data_train = read_annos_to_np(cars_train_annos_Path)
     dataset = Dataset1(img_dir, data_train)
-    lenTrain = int(len(dataset)*0.8)
-    lenValid = len(dataset)-lenTrain
-    train_dataset, valid_dataset = torchData.random_split(dataset, [lenTrain, lenValid])
-    trainLoader= torchData.DataLoader(train_dataset,batch_size=2,shuffle=False,drop_last=True)
-    validLoader= torchData.DataLoader(valid_dataset,batch_size=2,shuffle=False,drop_last=True)
+    trainLoader= torchData.DataLoader(dataset,batch_size=2,shuffle=False,drop_last=True)
     for data in trainLoader:
         imgs, labels = data
         for img in imgs:
             img=img.cpu().numpy() # tensor -> numpy
-            img = img.transpose([1,2,0]) # 3 * w * h -> w * h * 3
-            plt.figure()
-            plt.imshow(img)
-            plt.show()
-        break
-    
-    for data in validLoader:
-        imgs, labels = data
-        for img in imgs:
-            img=img.cpu().numpy()
             img = img.transpose([1,2,0]) # 3 * w * h -> w * h * 3
             plt.figure()
             plt.imshow(img)

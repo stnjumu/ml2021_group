@@ -42,7 +42,6 @@ train_dataset, valid_dataset = torchData.random_split(dataset, [lenTrain, lenVal
 
 trainLoader= torchData.DataLoader(train_dataset,batch_size=2,shuffle=False,drop_last=True)
 validLoader= torchData.DataLoader(valid_dataset,batch_size=2,shuffle=False,drop_last=True)
-
 # 训练
 # loss_fn = torch.nn.MSELoss()
 loss_fn = torch.nn.CrossEntropyLoss()
