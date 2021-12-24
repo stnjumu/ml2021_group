@@ -40,8 +40,8 @@ lenTrain = int(len(dataset)*0.8)
 lenValid = len(dataset)-lenTrain
 train_dataset, valid_dataset = torchData.random_split(dataset, [lenTrain, lenValid])
 
-trainLoader= torchData.DataLoader(train_dataset,batch_size=2,shuffle=False,drop_last=True)
-validLoader= torchData.DataLoader(valid_dataset,batch_size=2,shuffle=False,drop_last=True)
+trainLoader= torchData.DataLoader(train_dataset,batch_size=batch_size,shuffle=False,drop_last=True)
+validLoader= torchData.DataLoader(valid_dataset,batch_size=batch_size,shuffle=False,drop_last=True)
 # 训练
 # loss_fn = torch.nn.MSELoss()
 loss_fn = torch.nn.CrossEntropyLoss()

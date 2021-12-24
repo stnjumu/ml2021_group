@@ -33,7 +33,7 @@ class Dataset1(torchData.Dataset):
         
         assert(len(img.shape)==3) # 注意有灰度图
         img = img.transpose([2,0,1]) # 3 * w * h
-        return img, label
+        return img, int(label)
     
     def __len__(self):
         return np.shape(self.data)[0]
