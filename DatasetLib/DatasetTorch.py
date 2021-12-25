@@ -9,7 +9,7 @@ import cv2
 from torchvision import transforms
 from PIL import Image
 class DatasetTorch(torchData.Dataset):
-    def __init__(self, dir, data, split='train', aug=False):
+    def __init__(self, dir, data, split='train', aug=False, img_size=[224,224]):
         # data numpy二维数组，
         # [('bbox_x1', 'O'), ('bbox_y1', 'O'), ('bbox_x2', 'O'), ('bbox_y2', 'O'), ('class', 'O'), ('fname', 'O')] 
         # 前两项为：
@@ -25,14 +25,14 @@ class DatasetTorch(torchData.Dataset):
         if self.aug and self.split=='train':
             self.data =  np.concatenate((data, data, data), axis=0)
             self.tfs = transforms.Compose([
-                 transforms.RandomSizedCrop((384, 384)),
+                 transforms.RandomSizedCrop((img_size[0], img_size[1])),
                  transforms.RandomHorizontalFlip(),
                  transforms.ToTensor()
             ])
         else:
             self.data = data
             self.tfs = transforms.Compose([
-                 transforms.Resize((384, 384)),
+                 transforms.Resize((img_size[0], img_size[1])),
                  transforms.ToTensor()
             ])
     

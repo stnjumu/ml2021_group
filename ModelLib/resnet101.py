@@ -6,7 +6,7 @@ import torchvision.models as models
 class RenNet101_head(nn.Module):
     def __init__(self):
         super().__init__()
-        self.backbone = models.resnet18(pretrained=False)
+        self.backbone = models.resnet101(pretrained=False)
         self.head = nn.Linear(1000, 196)
         self.relu = nn.ReLU()
     
