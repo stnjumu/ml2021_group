@@ -38,7 +38,10 @@ class DatasetTorch(torchData.Dataset):
     
     def __getitem__(self, index):
         img_path = os.path.join(self.dir, self.data[index][-1]) # dir + '00001.jpg'
-        img = self.tfs(Image.open(img_path).convert("RGB"))
+        x = [int(self.data[index][0]), int(self.data[index][2])]
+        y = [int(self.data[index][1]), int(self.data[index][3])]
+        img = Image.open(img_path).convert("RGB")
+        img = self.tfs(img.crop([x[0],y[0],x[1],y[1]]))
         label = self.data[index][4]
         label = torch.from_numpy(np.array(int(label))).long()-1
         img = img.cuda()
@@ -61,7 +64,7 @@ if __name__ == '__main__':
     cars_train_annos_Path = './dataset/cars_train_annos.mat'
     img_dir = './dataset/cars_train'
     data_train = read_annos_to_np(cars_train_annos_Path)
-    dataset = Dataset1(img_dir, data_train)
+    dataset = DatasetTorch(img_dir, data_train)
     trainLoader= torchData.DataLoader(dataset,batch_size=2,shuffle=False,drop_last=True)
     for data in trainLoader:
         imgs, labels = data
