@@ -24,7 +24,7 @@ paramDict = {
     # 模型设置
     'model': resnet50(), # 自定义模型
     'resume_training': False, # 继续训练
-    'checkpointName': 'checkpoint_epoch15_acc0.38641975308641974.pth', # 检查点名称
+    'checkpointName': 'checkpoint_epoch51_acc0.43765432098765433.pth.pth', # 检查点名称
     'ignore_optim_flag': False, # 忽略部分预训练模型参数
     'ignore_backbone_name': 'base_backbone', # 要忽略的预训练参数名称
     
