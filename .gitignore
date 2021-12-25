@@ -5,3 +5,4 @@
 *.pyc
 log/
 DatasetLib/automl-master.zip
+DatasetLib/ImageNet21K-main.zip
