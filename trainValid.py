@@ -22,28 +22,22 @@ paramDict = {
     'loss': torch.nn.CrossEntropyLoss(),
 
     # 模型设置
-    'model': RenNet101_head(), # 自定义模型
+    'model': resnet50(), # 自定义模型
     'resume_training': False, # 继续训练
-    'checkpointName': 'checkpoint_epoch10.pth', # 检查点名称
+    'checkpointName': 'checkpoint_epoch15_acc0.38641975308641974.pth', # 检查点名称
     'ignore_optim_flag': False, # 忽略部分预训练模型参数
     'ignore_backbone_name': 'base_backbone', # 要忽略的预训练参数名称
     
     # 数据集设置
-    'dataset': DatasetTorch, # 自定义数据库
-    'augment': False, # 训练集数据增强,
-    'img_size': [384,384], # 图片缩放至尺寸
+    'DatasetClass': DatasetTorch, # 自定义数据库
 
      # 日志设置
     'datasetDir': './dataset/', # 数据集存放路径
     'checkpointDir':  './checkpoint/', # 检查点路径
     'log_path': 'log', # 日志路径
-    'val_freq' : 2, # 每隔epoch验证
+    'val_freq' : 100, # 每隔epoch验证
     'print_freq' : 10, # 每隔step计算准确率
     'save_freq' : 10, # 每隔epoch存储模型，暂未使用
-    'model': RenNet101_head(), # 自定义模型
-    'DatasetClass': DatasetTorch, # 自定义数据集
-    'ignore_optim_flag': False, # 忽略部分预训练模型参数
-    'ignore_backbone_name': 'base_backbone', # 要忽略的预训练参数名称
 
 }
 
@@ -79,18 +73,22 @@ save_freq = paramDict['save_freq']
 # 模型
 model = paramDict['model']
 if paramDict['resume_training']:
+    logger_base.info("loading checkpoint: {}".format(paramDict['checkpointName']))
     model.load_state_dict( torch.load( os.path.join(checkpointDir , paramDict['checkpointName']) ), strict=False)
 model = model.cuda() # 模型放GPU上；
 
 # 数据集
 cars_train_annos_Path = os.path.join(datasetDir, 'cars_train_annos.mat')
 img_dir = os.path.join(datasetDir, 'cars_train')
-data_train = read_annos_to_np(cars_train_annos_Path)
-dataset = paramDict['DatasetClass'](img_dir, data_train) 
+data_all = read_annos_to_np(cars_train_annos_Path)
+# dataset_all = paramDict['DatasetClass'](img_dir, data_train) 
+
 # 切分训练和验证
-lenTrain = int(len(dataset)*0.8)
-lenValid = len(dataset)-lenTrain
-train_dataset, valid_dataset = torchData.random_split(dataset, [lenTrain, lenValid])
+lenTrain = int(data_all.shape[0]*0.8)
+data_train = data_all[:lenTrain, :]
+data_test = data_all[lenTrain:, :]
+dataset_train = paramDict['DatasetClass'](img_dir, data_train)
+dataset_test = paramDict['DatasetClass'](img_dir, data_test)
 
 # 训练
 best_acc = 0.04
@@ -114,8 +112,8 @@ else:
 
 for epoch in range(epoches):
     
-    trainLoader= torchData.DataLoader(train_dataset,batch_size=batch_size,shuffle=True,drop_last=True)
-    validLoader= torchData.DataLoader(valid_dataset,batch_size=batch_size,shuffle=True,drop_last=True)
+    trainLoader= torchData.DataLoader(dataset_train,batch_size=batch_size,shuffle=True,drop_last=True)
+    validLoader= torchData.DataLoader(dataset_test,batch_size=batch_size,shuffle=True,drop_last=True)
     
     model.train()
     totalLoss = 0
@@ -132,9 +130,9 @@ for epoch in range(epoches):
         totalLoss += loss
         print("\repoch:%s train loss:%3.0f%%:%.4f, totalLoss = %.4f" % (epoch, int(rate * 100), loss, totalLoss/(step+1)), end="  ")
 
-        if step % print_freq == 0:
-            acc = (labels_predict.argmax(dim=1) == labels).float().sum().item()
-            logger_base.info("step:%s , accuracy = %.4f" % (epoch, acc))
+        # if step % print_freq == 0:
+        #     acc = (labels_predict.argmax(dim=1) == labels).float().sum().item()
+        #     logger_base.info("\rstep:%s , accuracy = %.4f" % (epoch, acc))
 
     # 验证
     if epoches % val_freq == 0:
