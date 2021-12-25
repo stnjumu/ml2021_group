@@ -19,9 +19,24 @@ paramDict = {
     'batch_size': 15, 
     'learning_rate': 1e-3,
     'epoches': 100, 
-    'log_path': 'log', # 日志路径
+    'loss': torch.nn.CrossEntropyLoss(),
+
+    # 模型设置
+    'model': RenNet101_head(), # 自定义模型
+    'resume_training': False, # 继续训练
+    'checkpointName': 'checkpoint_epoch10.pth', # 检查点名称
+    'ignore_optim_flag': False, # 忽略部分预训练模型参数
+    'ignore_backbone_name': 'base_backbone', # 要忽略的预训练参数名称
+    
+    # 数据集设置
+    'dataset': DatasetTorch, # 自定义数据库
+    'augment': False, # 训练集数据增强,
+    'img_size': [384,384], # 图片缩放至尺寸
+
+     # 日志设置
     'datasetDir': './dataset/', # 数据集存放路径
     'checkpointDir':  './checkpoint/', # 检查点路径
+    'log_path': 'log', # 日志路径
     'val_freq' : 2, # 每隔epoch验证
     'print_freq' : 10, # 每隔step计算准确率
     'save_freq' : 10, # 每隔epoch存储模型，暂未使用
@@ -63,7 +78,8 @@ save_freq = paramDict['save_freq']
 
 # 模型
 model = paramDict['model']
-# model.load_state_dict( torch.load( os.path.join(checkpointDir ,'checkpoint_epoch10.pth') ), strict=False)
+if paramDict['resume_training']:
+    model.load_state_dict( torch.load( os.path.join(checkpointDir , paramDict['checkpointName']) ), strict=False)
 model = model.cuda() # 模型放GPU上；
 
 # 数据集
@@ -79,7 +95,7 @@ train_dataset, valid_dataset = torchData.random_split(dataset, [lenTrain, lenVal
 # 训练
 best_acc = 0.04
 # loss_fn = torch.nn.MSELoss()
-loss_fn = torch.nn.CrossEntropyLoss()
+loss_fn = paramDict['loss'] 
 # 只优化除backbone之外的参数
 if paramDict['ignore_optim_flag']:
     optim_params = []
