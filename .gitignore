@@ -1,2 +1,6 @@
 /dataset
 /checkpoint
+
+*__pycache__/
+*.pyc
+log/
