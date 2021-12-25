@@ -10,14 +10,13 @@ import torch
 import torch.utils.data as torchData
 import matplotlib.pyplot as plt
 import numpy as np
-import cv2
 import logging
 import os
 from datetime import datetime
 
 # 参数字典
 paramDict = {
-    'batch_size': 10, 
+    'batch_size': 15, 
     'learning_rate': 1e-3,
     'epoches': 100, 
     'log_path': 'log', # 日志路径
@@ -27,6 +26,7 @@ paramDict = {
     'print_freq' : 10, # 每隔step计算准确率
     'save_freq' : 10, # 每隔epoch存储模型，暂未使用
     'model': RenNet101_head(), # 自定义模型
+    'DatasetClass': DatasetTorch, # 自定义数据集
     'ignore_optim_flag': False, # 忽略部分预训练模型参数
     'ignore_backbone_name': 'base_backbone', # 要忽略的预训练参数名称
 
@@ -70,7 +70,7 @@ model = model.cuda() # 模型放GPU上；
 cars_train_annos_Path = os.path.join(datasetDir, 'cars_train_annos.mat')
 img_dir = os.path.join(datasetDir, 'cars_train')
 data_train = read_annos_to_np(cars_train_annos_Path)
-dataset = DatasetTorch(img_dir, data_train) 
+dataset = paramDict['DatasetClass'](img_dir, data_train) 
 # 切分训练和验证
 lenTrain = int(len(dataset)*0.8)
 lenValid = len(dataset)-lenTrain

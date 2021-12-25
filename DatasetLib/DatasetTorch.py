@@ -74,5 +74,5 @@ if __name__ == '__main__':
             plt.figure()
             plt.imshow(img)
             plt.show()
-        # break
+        break
     print("测试结束！")
