@@ -1,3 +1,5 @@
+from ModelLib.swin import SwinNet
+from ModelLib.efficientnet_v2 import *
 from UtilLib.Read_annos_mat import read_annos_to_np
 from ModelLib.Model1 import Model1
 from ModelLib.resnet101 import RenNet101_head
@@ -22,11 +24,11 @@ paramDict = {
     'loss': torch.nn.CrossEntropyLoss(),
 
     # 模型设置
-    'model': resnet50(), # 自定义模型
+    'model': effnetv2_m(num_classes=196), # 自定义模型
     'resume_training': False, # 继续训练
-    'checkpointName': 'checkpoint_epoch51_acc0.43765432098765433.pth.pth', # 检查点名称
+    'checkpointName': 'swin_large_patch4_window12_384_22kto1k.pth', # 检查点名称
     'ignore_optim_flag': False, # 忽略部分预训练模型参数
-    'ignore_backbone_name': 'base_backbone', # 要忽略的预训练参数名称
+    'ignore_backbone_name': 'backbone', # 要忽略的预训练参数名称
     
     # 数据集设置
     'DatasetClass': DatasetTorch, # 自定义数据库
@@ -35,15 +37,15 @@ paramDict = {
     'datasetDir': './dataset/', # 数据集存放路径
     'checkpointDir':  './checkpoint/', # 检查点路径
     'log_path': 'log', # 日志路径
-    'val_freq' : 100, # 每隔epoch验证
-    'print_freq' : 10, # 每隔step计算准确率
+    'val_freq' : 2, # 每隔epoch验证
+    'print_freq' : 100, # 每隔step计算准确率
     'save_freq' : 10, # 每隔epoch存储模型，暂未使用
 
 }
 
 # 一些配置
 torch.set_default_tensor_type('torch.FloatTensor')
-torch.cuda.set_device(0)
+torch.cuda.set_device(4)
 datasetDir = paramDict['datasetDir'] # 数据集文件夹
 checkpointDir = paramDict['checkpointDir'] # 创建保存checkpoint的文件夹
 os.makedirs(checkpointDir, exist_ok=True)
@@ -55,6 +57,8 @@ Logger.setup_logger(None,log_path,
 Logger.setup_logger('val',log_path, '{}_val'.format(datetime.now().strftime('%y%m%d_%H%M')), level=logging.INFO)
 logger_base = logging.getLogger('base')
 logger_val = logging.getLogger('val')
+for k,v in paramDict.items():
+    logger_base.info("{} = {}".format(k, v))
 
 # 超参数
 batch_size = paramDict['batch_size']
@@ -73,8 +77,10 @@ save_freq = paramDict['save_freq']
 # 模型
 model = paramDict['model']
 if paramDict['resume_training']:
-    logger_base.info("loading checkpoint: {}".format(paramDict['checkpointName']))
-    model.load_state_dict( torch.load( os.path.join(checkpointDir , paramDict['checkpointName']) ), strict=False)
+    checkpoint = torch.load(os.path.join(checkpointDir , paramDict['checkpointName']), map_location='cpu')
+    model.load_state_dict(checkpoint['model'], strict=False)
+    logger_base.info(
+            'Load model from {}/{}.'.format(checkpointDir, paramDict['checkpointName']))
 model = model.cuda() # 模型放GPU上；
 
 # 数据集
@@ -119,7 +125,7 @@ for epoch in range(epoches):
     totalLoss = 0
     for step, data in enumerate(trainLoader, start=0):
         imgs, labels = data
-        
+        imgs, labels = imgs.cuda(), labels.cuda()
         optimizer.zero_grad()
         labels_predict = model(imgs)
         loss = loss_fn(labels_predict, labels)
@@ -128,12 +134,13 @@ for epoch in range(epoches):
         
         rate = (step + 1) / len(trainLoader)
         totalLoss += loss
-        print("\repoch:%s train loss:%3.0f%%:%.4f, totalLoss = %.4f" % (epoch, int(rate * 100), loss, totalLoss/(step+1)), end="  ")
 
-        # if step % print_freq == 0:
-        #     acc = (labels_predict.argmax(dim=1) == labels).float().sum().item()
-        #     logger_base.info("\rstep:%s , accuracy = %.4f" % (epoch, acc))
-
+        if step % print_freq == 0:
+            print("\repoch:%s train loss:%3.0f%%:%.4f, totalLoss = %.4f" % (epoch, int(rate * 100), loss, totalLoss/(step+1)))    
+            acc = (labels_predict.argmax(dim=1) == labels).float().mean().item()
+            logger_base.info("step:%s , accuracy = %.4f" % (step, acc))
+        else:
+            print("\repoch:%s train loss:%3.0f%%:%.4f, totalLoss = %.4f" % (epoch, int(rate * 100), loss, totalLoss/(step+1)), end="  ")
     # 验证
     if epoches % val_freq == 0:
         model.eval()
@@ -142,6 +149,7 @@ for epoch in range(epoches):
             label_predict_all = []
             for data in validLoader:
                 imgs, labels = data
+                imgs, labels = imgs.cuda(), labels.cuda()
                 labels_predict = model(imgs)
                 
                 labels = labels.cpu().numpy()
