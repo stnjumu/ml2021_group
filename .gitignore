@@ -4,3 +4,5 @@
 *__pycache__/
 *.pyc
 log/
+DatasetLib/ImageNet21K-main.zip
+DatasetLib/automl-master.zip

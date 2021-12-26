@@ -8,11 +8,6 @@
     trainValid.py在测试集上进行训练+验证；
     代码还跑不起来，可能有各种bug；
 ## 2021年12月25日
-    mu: 修复bug，代码能在windows上跑起来了
-
-# TODO:
- ## 改进框架代码
- ## 加入模型
- ## 优化Dataset
- ## 完成验证部分的代码
- ## 让代码先可以跑起来
+    mu: 修复bug，代码跑起来了
+    创建两个分支尝试新模型       efficientNet: ./DatasetLib/automl-master/efficientnetv2/effnetv2_model.py
+                    Tresnet: ./DatasetLib/ImageNet21K-main/src_files/models/tresnet/tresnet.py

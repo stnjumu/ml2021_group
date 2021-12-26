@@ -1,11 +1,9 @@
-# 数据集示例
-# 只是读取图片，裁剪后resize到256*256
+# 实现1
 import torch
 import torch.utils.data as torchData
 import matplotlib.pyplot as plt
 import os
 import numpy as np
-import cv2
 from torchvision import transforms
 from PIL import Image
 class DatasetTorch(torchData.Dataset):
@@ -80,5 +78,5 @@ if __name__ == '__main__':
             plt.figure()
             plt.imshow(img)
             plt.show()
-        # break
+        break
     print("测试结束！")

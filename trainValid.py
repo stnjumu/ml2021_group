@@ -12,16 +12,14 @@ import torch
 import torch.utils.data as torchData
 import matplotlib.pyplot as plt
 import numpy as np
-import cv2
 import logging
 import os
 from datetime import datetime
 
 # 参数字典
 paramDict = {
-     # 训练设置
-    'batch_size': 12, 
-    'learning_rate': 3e-4,
+    'batch_size': 15, 
+    'learning_rate': 1e-3,
     'epoches': 100, 
     'loss': torch.nn.CrossEntropyLoss(),
 
@@ -33,7 +31,7 @@ paramDict = {
     'ignore_backbone_name': 'backbone', # 要忽略的预训练参数名称
     
     # 数据集设置
-    'dataset': DatasetTorch, # 自定义数据库
+    'DatasetClass': DatasetTorch, # 自定义数据库
 
      # 日志设置
     'datasetDir': './dataset/', # 数据集存放路径
@@ -42,6 +40,7 @@ paramDict = {
     'val_freq' : 2, # 每隔epoch验证
     'print_freq' : 100, # 每隔step计算准确率
     'save_freq' : 10, # 每隔epoch存储模型，暂未使用
+
 }
 
 # 一些配置
@@ -87,12 +86,15 @@ model = model.cuda() # 模型放GPU上；
 # 数据集
 cars_train_annos_Path = os.path.join(datasetDir, 'cars_train_annos.mat')
 img_dir = os.path.join(datasetDir, 'cars_train')
-data_train = read_annos_to_np(cars_train_annos_Path)
-dataset = paramDict['dataset'](img_dir, data_train) 
+data_all = read_annos_to_np(cars_train_annos_Path)
+# dataset_all = paramDict['DatasetClass'](img_dir, data_train) 
+
 # 切分训练和验证
-lenTrain = int(len(dataset)*0.8)
-lenValid = len(dataset)-lenTrain
-train_dataset, valid_dataset = torchData.random_split(dataset, [lenTrain, lenValid])
+lenTrain = int(data_all.shape[0]*0.8)
+data_train = data_all[:lenTrain, :]
+data_test = data_all[lenTrain:, :]
+dataset_train = paramDict['DatasetClass'](img_dir, data_train)
+dataset_test = paramDict['DatasetClass'](img_dir, data_test)
 
 # 训练
 best_acc = 0.04
@@ -115,8 +117,10 @@ else:
     optimizer = torch.optim.Adam(params=model.parameters(), lr=learning_rate)
 
 for epoch in range(epoches):
-    trainLoader= torchData.DataLoader(train_dataset,batch_size=batch_size,shuffle=True, pin_memory=True, num_workers=8, drop_last=True)
-    validLoader= torchData.DataLoader(valid_dataset,batch_size=batch_size,shuffle=True, pin_memory=True, num_workers=8, drop_last=True)    
+    
+    trainLoader= torchData.DataLoader(dataset_train,batch_size=batch_size,shuffle=True,drop_last=True)
+    validLoader= torchData.DataLoader(dataset_test,batch_size=batch_size,shuffle=True,drop_last=True)
+    
     model.train()
     totalLoss = 0
     for step, data in enumerate(trainLoader, start=0):
