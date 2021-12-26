@@ -6,8 +6,9 @@ import os
 import numpy as np
 from torchvision import transforms
 from PIL import Image
+import cv2
 class DatasetTorch(torchData.Dataset):
-    def __init__(self, dir, data, split='train', aug=True, img_size=[384,384]):
+    def __init__(self, dir, data, split='train', aug=True, img_size=[368,368]):
         # data numpy二维数组，
         # [('bbox_x1', 'O'), ('bbox_y1', 'O'), ('bbox_x2', 'O'), ('bbox_y2', 'O'), ('class', 'O'), ('fname', 'O')] 
         # 前两项为：
@@ -37,6 +38,12 @@ class DatasetTorch(torchData.Dataset):
                  transforms.Normalize(
                         mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225]),
             ])
+            # self.tfs = transforms.Compose([
+            #     transforms.Resize(int(368 / 0.875)),
+            #     transforms.CenterCrop(368),
+            #     transforms.ToTensor()
+            # ])
+            
         print('数据集大小：', np.shape(data)[0])
 
     def __getitem__(self, index):
@@ -44,7 +51,9 @@ class DatasetTorch(torchData.Dataset):
         x = [int(self.data[index][0]), int(self.data[index][2])]
         y = [int(self.data[index][1]), int(self.data[index][3])]
         img = Image.open(img_path).convert("RGB")
+        # img = self.tfs(img)
         img = self.tfs(img.crop([x[0],y[0],x[1],y[1]]))
+
 
         if self.split != 'test':
             label = self.data[index][4]

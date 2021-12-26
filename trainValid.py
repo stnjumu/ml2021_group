@@ -1,5 +1,6 @@
 from ModelLib.swin import SwinNet
 from ModelLib.efficientnet_v2 import *
+from ModelLib.tresnet_v2 import TResnetL_V2
 from UtilLib.Read_annos_mat import read_annos_to_np
 from ModelLib.Model1 import Model1
 from ModelLib.resnet101 import RenNet101_head
@@ -15,18 +16,18 @@ import numpy as np
 import logging
 import os
 from datetime import datetime
-
+os.environ["CUDA_VISIBLE_DEVICES"]="4"
 # 参数字典
 paramDict = {
     'batch_size': 15, 
-    'learning_rate': 1e-3,
+    'learning_rate': 1e-4,
     'epoches': 100, 
     'loss': torch.nn.CrossEntropyLoss(),
 
     # 模型设置
-    'model': effnetv2_m(num_classes=196), # 自定义模型
-    'resume_training': False, # 继续训练
-    'checkpointName': 'swin_large_patch4_window12_384_22kto1k.pth', # 检查点名称
+    'model': TResnetL_V2(num_classes=196), # 自定义模型
+    'resume_training': True, # 继续训练
+    'checkpointName': 'stanford_cars_tresnet-l-v2_96_27.pth', # 检查点名称
     'ignore_optim_flag': False, # 忽略部分预训练模型参数
     'ignore_backbone_name': 'backbone', # 要忽略的预训练参数名称
     
@@ -45,7 +46,6 @@ paramDict = {
 
 # 一些配置
 torch.set_default_tensor_type('torch.FloatTensor')
-torch.cuda.set_device(4)
 datasetDir = paramDict['datasetDir'] # 数据集文件夹
 checkpointDir = paramDict['checkpointDir'] # 创建保存checkpoint的文件夹
 os.makedirs(checkpointDir, exist_ok=True)
@@ -64,9 +64,6 @@ for k,v in paramDict.items():
 batch_size = paramDict['batch_size']
 learning_rate = paramDict['learning_rate']
 epoches = paramDict['epoches']
-logger_base.info("batch_size= {}".format(batch_size))
-logger_base.info("learning_rate= {}".format(learning_rate))
-logger_base.info("epoches= {}".format(epoches))
 
 # 训练参数
 val_freq = paramDict['val_freq']
@@ -97,7 +94,7 @@ dataset_train = paramDict['DatasetClass'](img_dir, data_train)
 dataset_test = paramDict['DatasetClass'](img_dir, data_test)
 
 # 训练
-best_acc = 0.04
+best_acc = 0.5
 # loss_fn = torch.nn.MSELoss()
 loss_fn = paramDict['loss'] 
 # 只优化除backbone之外的参数
