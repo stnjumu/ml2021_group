@@ -573,7 +573,7 @@ class SwinTransformer(nn.Module):
 
     def forward(self, x):
         x = self.forward_features(x)
-        x = self.head(x)
+        # x = self.head(x)
         return x
 
     def flops(self):
@@ -590,8 +590,11 @@ class SwinNet(nn.Module):
     def __init__(self):
         super().__init__()
         # self.base_net = SwinTransformer(depths=[2, 2, 18, 2])
-        self.backbone = SwinTransformer(img_size=384, embed_dim=192, depths=[2, 2, 18, 2], window_size=12, num_heads=[ 6, 12, 24, 48 ], drop_path_rate=0.2)
-        self.mlp_end = Mlp(1000, hidden_features=512, out_features=196)
+        depths = [2, 2, 18, 2]
+        embed_dim  = 192
+        self.backbone = SwinTransformer(img_size=384, embed_dim=embed_dim, depths=depths, window_size=12, num_heads=[ 6, 12, 24, 48 ], drop_path_rate=0.2)
+        self.num_features = int(embed_dim * 2 ** (len(depths) - 1))
+        self.mlp_end = nn.Linear(self.num_features, 196)
     def forward(self, _x):
         _x = self.backbone(_x) #b,c,h,w  -> b, c
         return self.mlp_end(_x) # b,c -> b, c
