@@ -1,6 +1,6 @@
 /dataset
 /checkpoint
-
+/.vscode
 *__pycache__/
 *.pyc
 log/
