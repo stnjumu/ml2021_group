@@ -1,6 +1,6 @@
 from ModelLib.swin import SwinNet
 from ModelLib.tresnet_v2 import TResnetL_V2
-from ModelLib.efficientnet_v2 import *
+from ModelLib.efficientnet_v2_pretrain import *
 from UtilLib.Read_annos_mat import read_annos_to_np
 from ModelLib.Model1 import Model1
 from ModelLib.resnet101 import RenNet101_head
@@ -18,7 +18,9 @@ import time
 import logging
 import os
 from datetime import datetime
-os.environ["CUDA_VISIBLE_DEVICES"]="4"
+
+
+os.environ["CUDA_VISIBLE_DEVICES"]="1"
 # 参数字典
 paramDict = {
      # 训练设置
@@ -28,9 +30,9 @@ paramDict = {
     'loss': torch.nn.CrossEntropyLoss(),
 
     # 模型设置
-    'model': TResnetL_V2(num_classes=196), # 自定义模型
+    'model': EffNetV2(), # 自定义模型
     'resume_training': True, # 继续训练
-    'checkpointName': 'stanford_cars_tresnet-l-v2_96_27.pth', # 检查点名称
+    'checkpointName': 'checkpoint_epoch21_acc0.9395061728395062.pth', # 检查点名称
     'ignore_optim_flag': False, # 忽略部分预训练模型参数
     'ignore_backbone_name': 'backbone', # 要忽略的预训练参数名称
     
@@ -39,7 +41,7 @@ paramDict = {
 
      # 日志设置
     'datasetDir': './dataset/', # 数据集存放路径
-    'checkpointDir':  './checkpoint/', # 检查点路径
+    'checkpointDir':  './log/211227_1126/checkpoint', # 检查点路径
     'log_path': 'log', # 日志路径
     'val_freq' : 2, # 每隔epoch验证
     'print_freq' : 100, # 每隔step计算准确率
@@ -54,8 +56,9 @@ checkpointDir = paramDict['checkpointDir'] # 创建保存checkpoint的文件夹
 os.makedirs(checkpointDir, exist_ok=True)
 
 # 日志配置
-log_path = paramDict['log_path']
-Logger.setup_logger('test', log_path, '{}_test'.format(datetime.now().strftime('%y%m%d_%H%M')), level=logging.INFO, screen=True)
+log_path = "{}/Test_{}".format(paramDict['log_path'], datetime.now().strftime('%y%m%d_%H%M'))
+os.makedirs(log_path, exist_ok=True)
+Logger.setup_logger('test', log_path, 'test', level=logging.INFO, screen=True)
 logger_test = logging.getLogger('test')
 for k,v in paramDict.items():
     logger_test.info("{} = {}".format(k, v))
@@ -92,7 +95,6 @@ dataset = paramDict['dataset'](img_dir, data_test, split='test')
 testLoader = torchData.DataLoader(dataset, batch_size=batch_size, shuffle=False, pin_memory=True, num_workers=8, drop_last=False)
 # 测试并输出
 model.eval()
-output_name = datetime.now().strftime('%y%m%d_%H%M')
 with torch.no_grad():
     label_all = []
     label_predict_all = []
@@ -103,7 +105,7 @@ with torch.no_grad():
         imgs= imgs.cuda()
         labels_predict = model(imgs)
         labels_predict = np.argmax(labels_predict.cpu().numpy(), axis = 1)
-        with open('log/{}_submission.txt'.format(output_name), 'a+') as f:
+        with open('{}/submission.txt'.format(log_path), 'a+') as f:
             for i in range(labels_predict.shape[0]):
                 print(file_name[i], labels_predict[i]+1, file=f)
     logger_test.info(

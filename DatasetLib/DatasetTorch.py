@@ -28,22 +28,17 @@ class DatasetTorch(torchData.Dataset):
                  transforms.Resize((img_size[0], img_size[1])),
                  ImageNetAutoAugment(),
                  transforms.ToTensor(),
-                 transforms.Normalize(
-                        mean=[0.5, 0.5, 0.5], std=[0.5,0.5, 0.5]),
+                #  transforms.Normalize(
+                #     mean=[0.5, 0.5, 0.5], std=[0.5,0.5, 0.5]),
             ])
         else:
             self.data = data
             self.tfs = transforms.Compose([
                  transforms.Resize((img_size[0], img_size[1])),
                  transforms.ToTensor(),
-                 transforms.Normalize(
-                        mean=[0.5, 0.5, 0.5], std=[0.5,0.5, 0.5]),
+                #  transforms.Normalize(
+                #     mean=[0.5, 0.5, 0.5], std=[0.5,0.5, 0.5]),
             ])
-            # self.tfs = transforms.Compose([
-            #     transforms.Resize(int(368 / 0.875)),
-            #     transforms.CenterCrop(368),
-            #     transforms.ToTensor()
-            # ])
             
         print('数据集大小：', np.shape(data)[0])
 
@@ -52,9 +47,7 @@ class DatasetTorch(torchData.Dataset):
         x = [int(self.data[index][0]), int(self.data[index][2])]
         y = [int(self.data[index][1]), int(self.data[index][3])]
         img = Image.open(img_path).convert("RGB")
-        # img = self.tfs(img)
         img = self.tfs(img.crop([x[0],y[0],x[1],y[1]]))
-
 
         if self.split != 'test':
             label = self.data[index][4]
