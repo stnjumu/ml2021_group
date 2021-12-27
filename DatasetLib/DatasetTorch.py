@@ -7,8 +7,9 @@ import numpy as np
 from torchvision import transforms
 from PIL import Image
 import cv2
+from .auto_augment import AutoAugment, ImageNetAutoAugment
 class DatasetTorch(torchData.Dataset):
-    def __init__(self, dir, data, split='train', aug=True, img_size=[368,368]):
+    def __init__(self, dir, data, split='train', aug=True, img_size=[384,384]):
         # data numpy二维数组，
         # [('bbox_x1', 'O'), ('bbox_y1', 'O'), ('bbox_x2', 'O'), ('bbox_y2', 'O'), ('class', 'O'), ('fname', 'O')] 
         # 前两项为：
@@ -21,14 +22,14 @@ class DatasetTorch(torchData.Dataset):
         self.split = split
         self.aug = aug
         if self.aug and self.split=='train':
-            self.data =  np.concatenate((data, data, data), axis=0)
+            # self.data =  np.concatenate((data, data, data), axis=0)
+            self.data = data
             self.tfs = transforms.Compose([
-                #  transforms.RandomSizedCrop((img_size[0], img_size[1])),
                  transforms.Resize((img_size[0], img_size[1])),
-                 transforms.RandomHorizontalFlip(),
+                 ImageNetAutoAugment(),
                  transforms.ToTensor(),
                  transforms.Normalize(
-                        mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225]),
+                        mean=[0.5, 0.5, 0.5], std=[0.5,0.5, 0.5]),
             ])
         else:
             self.data = data
@@ -36,7 +37,7 @@ class DatasetTorch(torchData.Dataset):
                  transforms.Resize((img_size[0], img_size[1])),
                  transforms.ToTensor(),
                  transforms.Normalize(
-                        mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225]),
+                        mean=[0.5, 0.5, 0.5], std=[0.5,0.5, 0.5]),
             ])
             # self.tfs = transforms.Compose([
             #     transforms.Resize(int(368 / 0.875)),

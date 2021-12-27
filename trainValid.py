@@ -1,5 +1,5 @@
 from ModelLib.swin import SwinNet
-from ModelLib.efficientnet_v2 import *
+from ModelLib.efficientnet_v2_pretrain import *
 from ModelLib.tresnet_v2 import TResnetL_V2
 from UtilLib.Read_annos_mat import read_annos_to_np
 from ModelLib.Model1 import Model1
@@ -19,14 +19,14 @@ from datetime import datetime
 os.environ["CUDA_VISIBLE_DEVICES"]="4"
 # 参数字典
 paramDict = {
-    'batch_size': 15, 
-    'learning_rate': 1e-4,
+    'batch_size': 24, 
+    'learning_rate': 1e-3,
     'epoches': 100, 
     'loss': torch.nn.CrossEntropyLoss(),
 
     # 模型设置
-    'model': TResnetL_V2(num_classes=196), # 自定义模型
-    'resume_training': True, # 继续训练
+    'model': EffNetV2(), # 自定义模型
+    'resume_training': False, # 继续训练
     'checkpointName': 'stanford_cars_tresnet-l-v2_96_27.pth', # 检查点名称
     'ignore_optim_flag': False, # 忽略部分预训练模型参数
     'ignore_backbone_name': 'backbone', # 要忽略的预训练参数名称
@@ -90,8 +90,8 @@ data_all = read_annos_to_np(cars_train_annos_Path)
 lenTrain = int(data_all.shape[0]*0.8)
 data_train = data_all[:lenTrain, :]
 data_test = data_all[lenTrain:, :]
-dataset_train = paramDict['DatasetClass'](img_dir, data_train)
-dataset_test = paramDict['DatasetClass'](img_dir, data_test)
+dataset_train = paramDict['DatasetClass'](img_dir, data_train, split='train')
+dataset_val = paramDict['DatasetClass'](img_dir, data_test, split='val')
 
 # 训练
 best_acc = 0.5
@@ -109,15 +109,14 @@ if paramDict['ignore_optim_flag']:
             optim_params.append(v)
             logger_base.info(
                 'Params [{:s}] initialized to 0 and will optimize.'.format(k))
-    optimizer = torch.optim.Adam(params=optim_params, lr=learning_rate)
+    optimizer = torch.optim.Adam(params=optim_params, lr=learning_rate, betas=(0.9, 0.999), eps=1e-08, weight_decay=1e-4)
 else:
-    optimizer = torch.optim.Adam(params=model.parameters(), lr=learning_rate)
-
+    optimizer = torch.optim.Adam(params=model.parameters(), lr=learning_rate, betas=(0.9, 0.999), eps=1e-08, weight_decay=1e-4)
+lr_scheduler = torch.optim.lr_scheduler.CyclicLR(optimizer,base_lr=1e-6, max_lr=1e-3, gamma=0.99994, cycle_momentum=False)
+trainLoader= torchData.DataLoader(dataset_train,batch_size=batch_size,shuffle=True,drop_last=True)
+validLoader= torchData.DataLoader(dataset_val,batch_size=batch_size,shuffle=False,drop_last=True)    
 for epoch in range(epoches):
-    
-    trainLoader= torchData.DataLoader(dataset_train,batch_size=batch_size,shuffle=True,drop_last=True)
-    validLoader= torchData.DataLoader(dataset_test,batch_size=batch_size,shuffle=True,drop_last=True)
-    
+
     model.train()
     totalLoss = 0
     for step, data in enumerate(trainLoader, start=0):
@@ -128,7 +127,7 @@ for epoch in range(epoches):
         loss = loss_fn(labels_predict, labels)
         loss.backward()
         optimizer.step()
-        
+        lr_scheduler.step()
         rate = (step + 1) / len(trainLoader)
         totalLoss += loss
 
