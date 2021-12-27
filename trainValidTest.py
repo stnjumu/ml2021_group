@@ -9,7 +9,6 @@ from DatasetLib.DatasetTorch import DatasetTorch
 import UtilLib.logger as Logger
 from UtilLib.loss import FocalLoss, SoftCrossEntropyLoss
 
-import UtilLib.logger as Logger
 import torch
 import torch.utils.data as torchData
 import matplotlib.pyplot as plt
@@ -20,7 +19,6 @@ import os
 from tqdm import tqdm
 import time
 from datetime import datetime
-from tqdm import tqdm
 
 os.environ["CUDA_VISIBLE_DEVICES"]="4"
 torch.set_default_tensor_type('torch.FloatTensor')
@@ -90,6 +88,7 @@ class Trainer():
         data_all = read_annos_to_np(cars_train_annos_Path)
 
         # 切分训练和验证
+        np.random.shuffle(data_all) # 随机排序
         train_val_ratio = 1
         if self.valid_enable:
             train_val_ratio = 0.8
@@ -142,10 +141,10 @@ class Trainer():
             model.load_state_dict(checkpoint['model'], strict=False)
             self.logger_base.info(
                     'Load model from {}/{}.'.format(paramDict['checkpointPath']))
-        self.model = model.cuda() # 模型放GPU上；
+        self.model = model.cuda()
 
         # 训练
-        self.loss_fn = paramDict['loss'] 
+        self.loss_fn = paramDict['loss']
         self.lr = paramDict['learning_rate']
 
         # 只优化除backbone之外的参数

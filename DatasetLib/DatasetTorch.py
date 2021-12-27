@@ -6,7 +6,6 @@ import os
 import numpy as np
 from torchvision import transforms
 from PIL import Image
-import cv2
 from .auto_augment import AutoAugment, ImageNetAutoAugment
 class DatasetTorch(torchData.Dataset):
     def __init__(self, dir, data, split='train', aug=True, img_size=[384,384]):

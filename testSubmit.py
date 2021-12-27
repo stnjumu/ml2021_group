@@ -71,7 +71,7 @@ def run(args):
         model.load_state_dict(checkpoint['model'], strict=False)
     else:
         model.load_state_dict(checkpoint, strict=False)
-    model = model.cuda() # 模型放GPU上；
+    model = model.cuda() 
 
     # 数据集
     cars_test_annos_Path = os.path.join(datasetDir, 'cars_test_annos.mat')
@@ -96,8 +96,8 @@ def run(args):
         problem = "FineGrainedCar_evaluate"
         ip = "115.236.52.125"
         port = "4000"
-        sid = "SY2106335"
-        token = "123456"
+        sid = "ZY2106345"
+        token = "gagaga"
         with open(logPath) as f:
             d = list(f.readlines())
         score = submit(ip, port, sid, token, d, problem)
