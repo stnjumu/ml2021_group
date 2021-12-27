@@ -13,6 +13,10 @@
                     Tresnet: ./DatasetLib/ImageNet21K-main/src_files/models/tresnet/tresnet.py
 ## 2021年12月26, 27日
     最好test acc：74.5%
+## 2021年12月27日
+    最好test acc: 94%
+    liangwei:TResnet、增加自动数据增强、增加批量提交代码，trainValid整理
+
 
 # TODO:
 ## 更新框架代码
