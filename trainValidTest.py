@@ -1,6 +1,5 @@
 from ModelLib.swin import SwinNet
 from ModelLib.efficientnet_v2_pretrain import *
-from ModelLib.tresnet_v2 import TResnetL_V2
 from UtilLib.Read_annos_mat import read_annos_to_np
 from ModelLib.Model1 import Model1
 from ModelLib.resnet101 import RenNet101_head
