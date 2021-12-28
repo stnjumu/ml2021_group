@@ -255,7 +255,7 @@ class Trainer():
                     for i in range(labels_predict.shape[0]):
                         print(file_name[i], labels_predict[i]+1, file=f)
             score = self._submit(epoch, submissionPath)
-            if score != None and float(score) > self.score_lower_bound:
+            if score == None or float(score) > self.score_lower_bound: # None出错则直接保存，否则判断score
                 checkpointName = "checkpoint_epoch" + str(epoch) +'_score'+str(score)+ '.pth'
                 self.logger_base.info("Saving checkpoint: {}".format(checkpointName))
                 torch.save(self.model.state_dict(), os.path.join(self.checkpointSaveDir ,checkpointName))
