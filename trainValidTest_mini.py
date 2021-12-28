@@ -21,14 +21,14 @@ from datetime import datetime
 import timm
 import requests
 
-os.environ["CUDA_VISIBLE_DEVICES"]="0"
+os.environ["CUDA_VISIBLE_DEVICES"]="4"
 torch.set_default_tensor_type('torch.FloatTensor')
 
 # 参数字典
 paramDict = {
     'verbose': False, # 调试
-    'valid_enable': False, # 是否划分一部分数据集为验证集
-    'valid_epoches': 25, # 前valid_epoches个epoch验证不提交，后面的epoch提交不验证；
+    'valid_enable': True, # 是否划分一部分数据集为验证集
+    'valid_epoches': 1, # 前valid_epoches个epoch验证不提交，后面的epoch提交不验证；
     'train_val_ratio': 0.8, # 划分训练/验证集的话，训练集所占比例；
     # 'test_enable': True, # 是否测试，测试默认提交到leaderboard
     'tb_logger': False, # 是否开启tensor logger
@@ -42,8 +42,8 @@ paramDict = {
     # 模型设置
     # 'model': EffNetV2(), # 自定义模型
     'model': timm.create_model('resnest101e', pretrained= True, num_classes = 196), # 自定义模型
-    'resume_training': False, # 继续训练
-    'checkpointPath': './checkpoint/stanford_cars_tresnet-l-v2_96_27.pth', # 检查点名称
+    'resume_training': True, # 继续训练
+    'checkpointPath': './../ml2021_group_1228/log/Train_211228_1322/checkpoint/checkpoint_epoch41_acc0.987037037037037.pth', # 检查点名称
     'ignore_optim_flag': False, # 忽略部分预训练模型参数
     'ignore_backbone_name': 'backbone', # 要忽略的预训练参数名称
     
@@ -51,7 +51,7 @@ paramDict = {
     'DatasetClass': DatasetTorch, # 自定义数据库
 
      # 日志设置
-    'datasetDir': './dataset/', # 数据集存放路径
+    'datasetDir': './../ml2021_group_1228/dataset/', # 数据集存放路径
     'logPath': 'log', # 日志路径
     'val_freq' : 1, # 每隔epoch验证
     'print_freq' : 100, # 每隔step计算准确率
@@ -71,12 +71,12 @@ class Trainer():
 
     def runnerInit(self):
         self.verbose = paramDict['verbose']
-        if self.verbose:    
-            paramDict['valid_enable'] = True
-            paramDict['val_freq'] = 1
-            paramDict['print_freq'] = 5
-            paramDict['save_freq'] = 1
-            paramDict['tb_logger'] = True
+        # if self.verbose:    
+        #     paramDict['valid_enable'] = True
+        #     paramDict['val_freq'] = 1
+        #     paramDict['print_freq'] = 5
+        #     paramDict['save_freq'] = 1
+        #     paramDict['tb_logger'] = True
             
         self.valid_enable = paramDict['valid_enable']
         self.valid_epoches = paramDict['valid_epoches']
@@ -105,6 +105,7 @@ class Trainer():
         if self.verbose:
             data_train = data_all[:self.batch_size*2, :]
             data_val = data_all[:self.batch_size*2, :]
+            data_all = data_all[:self.batch_size*2, :]
         dataset_all = paramDict['DatasetClass'](train_img_dir, data_all, split='train')
         dataset_train = paramDict['DatasetClass'](train_img_dir, data_train, split='train')
         dataset_val = paramDict['DatasetClass'](train_img_dir, data_val, split='val')
@@ -249,12 +250,12 @@ class Trainer():
                 imgs= imgs.cuda()
                 labels_predict = self.model(imgs)
                 labels_predict = np.argmax(labels_predict.cpu().numpy(), axis = 1)
-                submissionPath = '{}/submission_{}.txt'.format(self.resultDir, datetime.now().strftime('%y%m%d_%H%M'))
+                submissionPath = '{}/submission_epoch{}.txt'.format(self.resultDir, epoch)
                 with open(submissionPath, 'a+') as f:
                     for i in range(labels_predict.shape[0]):
                         print(file_name[i], labels_predict[i]+1, file=f)
             score = self._submit(epoch, submissionPath)
-            if score == None or float(score) > self.score_lower_bound: # None 表示提交出错，直接保存，否则判断成绩再保存;
+            if score != None and float(score) > self.score_lower_bound:
                 checkpointName = "checkpoint_epoch" + str(epoch) +'_score'+str(score)+ '.pth'
                 self.logger_base.info("Saving checkpoint: {}".format(checkpointName))
                 torch.save(self.model.state_dict(), os.path.join(self.checkpointSaveDir ,checkpointName))
@@ -288,7 +289,7 @@ class Trainer():
             return None
         # print('Result: ', score, 'Submission Txt Path:[', logPath, 'CheckPoint Path:', checkpointPath)
     
-    def __submit(ip, port, sid, token, ans, problem):
+    def __submit(self, ip, port, sid, token, ans, problem):
         print("正在提交...", end=' ')
         url = "http://%s:%s/jsonrpc" % (ip, port)
 
