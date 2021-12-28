@@ -8,7 +8,7 @@ from torchvision import transforms
 from PIL import Image
 from .auto_augment import AutoAugment, ImageNetAutoAugment
 class DatasetTorch(torchData.Dataset):
-    def __init__(self, dir, data, split='train', aug=True, img_size=[384,384]):
+    def __init__(self, dir, data, split='train', aug=True, img_size=[256,256]):
         # data numpy二维数组，
         # [('bbox_x1', 'O'), ('bbox_y1', 'O'), ('bbox_x2', 'O'), ('bbox_y2', 'O'), ('class', 'O'), ('fname', 'O')] 
         # 前两项为：
