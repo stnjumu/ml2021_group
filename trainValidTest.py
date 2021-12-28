@@ -19,12 +19,12 @@ from tqdm import tqdm
 import time
 from datetime import datetime
 
-os.environ["CUDA_VISIBLE_DEVICES"]="4"
+os.environ["CUDA_VISIBLE_DEVICES"]="0"
 torch.set_default_tensor_type('torch.FloatTensor')
 
 # 参数字典
 paramDict = {
-    'verbose': False, # 调试
+    'verbose': True, # 调试
     'valid_enable': False, # 是否划分一部分数据集为验证集
     'test_enable': True, # 是否测试，测试默认提交到leaderboard
     'tb_logger': True, # 是否开启tensor logger
@@ -36,7 +36,8 @@ paramDict = {
     'loss': FocalLoss(),
 
     # 模型设置
-    'model': EffNetV2(), # 自定义模型
+    # 'model': EffNetV2(), # 自定义模型
+    'model': timm.create_model('tresnet_xl_448', pretrained= True, num_classes = 196), # 自定义模型
     'resume_training': False, # 继续训练
     'checkpointPath': './checkpoint/stanford_cars_tresnet-l-v2_96_27.pth', # 检查点名称
     'ignore_optim_flag': False, # 忽略部分预训练模型参数
@@ -229,7 +230,8 @@ class Trainer():
                 checkpointName = "checkpoint_epoch" + str(epoch) +'_acc'+str(acc)+ '.pth'
                 print("Saving checkpoint:", checkpointName)
                 torch.save(self.model.state_dict(), os.path.join(self.checkpointSaveDir ,checkpointName))
-                self._test(checkpointPath = os.path.join(self.checkpointSaveDir ,checkpointName), epoch=epoch)
+                if not self.verbose:
+                    self._test(checkpointPath = os.path.join(self.checkpointSaveDir ,checkpointName), epoch=epoch)
 
     def _test(self, checkpointPath, epoch, gpu_id=1):
         if self.test_enable:
