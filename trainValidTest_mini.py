@@ -135,7 +135,7 @@ class Trainer():
             self.tb_logger = SummaryWriter(log_dir=self.logPath)
         Logger.setup_logger(None,self.logPath,'train', level=logging.INFO, screen=True)
         # Logger.setup_logger('val',self.logPath,'val', level=logging.INFO)
-        Logger.setup_logger('val_or_test',self.logPath,'val_or_test', level=logging.INFO, screen=True)
+        Logger.setup_logger('val_or_test',self.logPath,'val_or_test', level=logging.INFO, screen=False)
         self.logger_base = logging.getLogger('base')
         # self.logger_val = logging.getLogger('val')
         self.logger_val_or_test = logging.getLogger('val_or_test')
