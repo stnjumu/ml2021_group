@@ -1,6 +1,14 @@
 import numpy as np
 
 class Deal_label_map:
+    """[Deal_label_map类] 用于读取label_map.txt拆分单一标签为3个标签，由[0,196)的label获取品牌标签和年份标签
+        可尝试品牌grand_label和年份year_label
+        使用下面3个函数即可：
+        grand_label, year_label = get_grand_year(label)
+        True/False = judge_grand(grand_label, label)
+        True/False = judge_year(year_label, label)
+    """    
+    
     def __init__(self, label_map_path='./dataset/label_map.txt'):
         self.label_map_list=[]
         
@@ -59,12 +67,35 @@ class Deal_label_map:
             assert self.unique_year_list[self.year_numList[i]] == self.year_list[i]
             
     def get_grand_year(self, label):
-        assert label>=0 and label<=195
+        assert label>=0 and label<196
         return self.grand_numList[label], self.year_numList[label]
+    
+    def judge_grand(self, grand_label, label):
+        assert label>=0 and label<196
+        assert grand_label>=0 and grand_label<len(self.unique_grand_list)
+        return self.grand_numList[label] == grand_label
+    
+    def judge_year(self, year_label, label):
+        assert label>=0 and label<196
+        assert year_label>=0 and year_label<len(self.unique_year_list)
+        return self.year_numList[label] == year_label
 
 if __name__ == '__main__':
     label_map = Deal_label_map()
+    print("品牌类别个数", len(label_map.unique_grand_list))
+    print("系列类别个数", len(label_map.unique_series_list))
+    print("年份类别个数", len(label_map.unique_year_list))
+    
+    # 用法示例
     label = 0
     print(label_map.label_map_list[label])
     grand_label, year_label = label_map.get_grand_year(label)
-    print("label = {} 对应的品牌为 {} , 对应的年份为 {} ".format(label,grand_label, year_label))
+    print("label = {} 对应的品牌label为 {} , 对应的年份label为 {} ".format(label,grand_label, year_label))
+    print("品牌label = {} 即{}".format(grand_label, label_map.unique_grand_list[grand_label]))
+    print("年份label = {} 即{}".format(year_label, label_map.unique_year_list[year_label]))
+    
+    print("判断label = {}的品牌是不是grand_label={} : {}".format(label, grand_label, label_map.judge_grand(grand_label, label)))
+    print("判断label = {}的品牌是不是grand_label={} : {}".format(label, grand_label+1, label_map.judge_grand(grand_label+1, label)))
+    
+    print("判断label = {}的年份是不是year_label={} : {}".format(label, year_label, label_map.judge_year(year_label, label)))
+    print("判断label = {}的年份是不是year_label={} : {}".format(label, year_label+1, label_map.judge_year(grand_label+1, label)))
