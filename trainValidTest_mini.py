@@ -13,7 +13,7 @@ import torch.utils.data as torchData
 import matplotlib.pyplot as plt
 import numpy as np
 import logging
-from tensorboardX import SummaryWriter
+#from tensorboardX import SummaryWriter
 import os
 from tqdm import tqdm
 import time
@@ -21,37 +21,41 @@ from datetime import datetime
 import timm
 import requests
 
-os.environ["CUDA_VISIBLE_DEVICES"]="4"
+os.environ["CUDA_VISIBLE_DEVICES"]="0"
 torch.set_default_tensor_type('torch.FloatTensor')
 
 # 参数字典
 paramDict = {
+    'discription': 'mpp3: resnest101e只用一张卡，训练0~100', # 一句话描述此次训练
     'verbose': False, # 调试
     'valid_enable': True, # 是否划分一部分数据集为验证集
-    'valid_epoches': 1, # 前valid_epoches个epoch验证不提交，后面的epoch提交不验证；
+    'valid_epoches': 20, # 前valid_epoches个epoch验证不提交，后面的epoch提交不验证；
     'train_val_ratio': 0.8, # 划分训练/验证集的话，训练集所占比例；
-    # 'test_enable': True, # 是否测试，测试默认提交到leaderboard
+    'test_enable': True, # 是否测试，测试默认提交到leaderboard
     'tb_logger': False, # 是否开启tensor logger
-    'batch_size': 12, 
+    'batch_size': 30, 
     'learning_rate': 1e-4,
-    'lr_scheduler_enable' : False,
-    'epoches': 50, 
-    'loss': torch.nn.CrossEntropyLoss(),
-    # 'loss': FocalLoss(),
+    'lr_scheduler_enable' : True,
+    'epoches': 100, 
+    # 'loss': torch.nn.CrossEntropyLoss(),
+    'loss': FocalLoss(),
+    # 'loss': SoftCrossEntropyLoss(),
 
     # 模型设置
-    # 'model': EffNetV2(), # 自定义模型
+    # 'model': timm.create_model('tf_efficientnetv2_m', pretrained=True, num_classes=196), # 自定义模型
     'model': timm.create_model('resnest101e', pretrained= True, num_classes = 196), # 自定义模型
-    'resume_training': True, # 继续训练
-    'checkpointPath': './../ml2021_group_1228/log/Train_211228_1322/checkpoint/checkpoint_epoch41_acc0.987037037037037.pth', # 检查点名称
+    # 'model': timm.create_model('resnest269e', pretrained= True, num_classes = 196), # 自定义模型
+    'resume_training': False, # 继续训练
+    'checkpointPath': './log/Train_211229_0150/checkpoint/checkpoint_epoch49_scoreNone.pth', # 检查点名称
     'ignore_optim_flag': False, # 忽略部分预训练模型参数
     'ignore_backbone_name': 'backbone', # 要忽略的预训练参数名称
     
     # 数据集设置
     'DatasetClass': DatasetTorch, # 自定义数据库
+    # 'DatasetClass': DatasetTorch416, # 自定义数据库
 
      # 日志设置
-    'datasetDir': './../ml2021_group_1228/dataset/', # 数据集存放路径
+    'datasetDir': '/home/zhounan_2021/code/MLfinalwork/ml2021_group/dataset', # 数据集存放路径
     'logPath': 'log', # 日志路径
     'val_freq' : 1, # 每隔epoch验证
     'print_freq' : 100, # 每隔step计算准确率
@@ -71,23 +75,17 @@ class Trainer():
 
     def runnerInit(self):
         self.verbose = paramDict['verbose']
-        # if self.verbose:    
-        #     paramDict['valid_enable'] = True
-        #     paramDict['val_freq'] = 1
-        #     paramDict['print_freq'] = 5
-        #     paramDict['save_freq'] = 1
-        #     paramDict['tb_logger'] = True
             
         self.valid_enable = paramDict['valid_enable']
         self.valid_epoches = paramDict['valid_epoches']
-        # self.test_enable = paramDict['test_enable']
+        self.test_enable = paramDict['test_enable']
         self.epoches = paramDict['epoches']
         self.total_train_step = 0
         self.total_valid_step = 0
         # self.best_acc = 0.9 # 不再使用和更新best_acc，保存所有大于下界的模型。
-        self.acc_lower_bound = 0.9
-        self.score_lower_bound = 0.9
-       
+        self.acc_lower_bound = 0.92
+        self.score_lower_bound = 0.93
+
     def datasetInit(self):
         # 测试数据集
         self.batch_size = paramDict['batch_size']
@@ -134,10 +132,9 @@ class Trainer():
         if self.tb_logger_enable:
             self.tb_logger = SummaryWriter(log_dir=self.logPath)
         Logger.setup_logger(None,self.logPath,'train', level=logging.INFO, screen=True)
-        # Logger.setup_logger('val',self.logPath,'val', level=logging.INFO)
-        Logger.setup_logger('val_or_test',self.logPath,'val_or_test', level=logging.INFO, screen=False)
+        Logger.setup_logger('val_or_test',self.logPath,'val_or_test', level=logging.INFO, screen=False) # BUG: screen = True会在控制台打印2次
         self.logger_base = logging.getLogger('base')
-        # self.logger_val = logging.getLogger('val')
+        self.logger_base.info(paramDict['discription'])
         self.logger_val_or_test = logging.getLogger('val_or_test')
         for k,v in paramDict.items():
             self.logger_base.info("{} = {}".format(k, v))
@@ -199,7 +196,7 @@ class Trainer():
             totalLoss += loss
             
             print("\repoch:%s train loss:%3.0f%%:%.4f, totalLoss = %.4f" % (epoch, int(rate * 100), loss, totalLoss/(step+1)), end="  ")
-            # 去除训练集的acc计算
+            
             if step % self.print_freq == 0 and self.tb_logger_enable:
                 # self.tb_logger.add_scalar('Train_Acc', acc, self.total_train_step//self.print_freq)
                 self.tb_logger.add_scalar('Train_Loss', totalLoss/(step+1), self.total_train_step//self.print_freq)
@@ -238,8 +235,6 @@ class Trainer():
                 checkpointName = "checkpoint_epoch" + str(epoch) +'_acc'+str(acc)+ '.pth'
                 self.logger_base.info("Saving checkpoint: {}".format(checkpointName))
                 torch.save(self.model.state_dict(), os.path.join(self.checkpointSaveDir ,checkpointName))
-                # if not self.verbose:
-                #     self._test(checkpointPath = os.path.join(self.checkpointSaveDir ,checkpointName), epoch=epoch)
 
     def _test(self, epoch):
         self.model.eval()
@@ -255,22 +250,18 @@ class Trainer():
                     for i in range(labels_predict.shape[0]):
                         print(file_name[i], labels_predict[i]+1, file=f)
             score = self._submit(epoch, submissionPath)
-            if score != None and float(score) > self.score_lower_bound:
+            if score == None or float(score) > self.score_lower_bound: # None出错则直接保存，否则判断score
                 checkpointName = "checkpoint_epoch" + str(epoch) +'_score'+str(score)+ '.pth'
                 self.logger_base.info("Saving checkpoint: {}".format(checkpointName))
                 torch.save(self.model.state_dict(), os.path.join(self.checkpointSaveDir ,checkpointName))
                
     
     def _submit(self, epoch, submissionPath): 
+        if not self.test_enable: # 不提交
+            return None 
+        
         # 在_test()中用到
         self.logger_val_or_test.info('Epoch {} : Test and sumbit to the leaderboard'.format(epoch))
-        #    
-        # try:
-        #     self.logger_test.info('Epoch {} : Test and sumbit to the leaderboard'.format(epoch))
-        #     os.popen('python testSubmit.py -gpu {} -m {} -p {} >> log/ranking.log'.format(gpu_id, checkpointPath, self.resultDir))
-
-        # except (BrokenPipeError, IOError):
-        #     self.logger_test.info('Epoch {} : Test Error, Checkpoint is {}'.format(IOError, checkpointPath))
 
         problem = "FineGrainedCar_evaluate"
         ip = "115.236.52.125"
