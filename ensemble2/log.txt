@@ -1,0 +1,167 @@
+0.9527421962442483, ('Aug1_EfficientNetL_384.txt', 'Aug1_FocalLoss.txt', 'Aug1_Norm.txt', 'Aug1_ResNest_E48.txt', 'Aug1_SoftLoss.txt', 'Aug2_EfficientNetL_468.txt')
+0.9544832732247233, ('Aug1_EfficientNetL_384.txt', 'Aug1_FocalLoss.txt', 'Aug1_Norm.txt', 'Aug1_ResNest_E48.txt', 'Aug1_SoftLoss.txt', 'ResNest269_E35.txt')
+0.9548563611491108, ('Aug1_EfficientNetL_384.txt', 'Aug1_FocalLoss.txt', 'Aug1_Norm.txt', 'Aug1_ResNest_E48.txt', 'Aug2_EfficientNetL_468.txt', 'ResNest269_E35.txt')
+0.9537370973759483, ('Aug1_EfficientNetL_384.txt', 'Aug1_FocalLoss.txt', 'Aug1_Norm.txt', 'Aug1_SoftLoss.txt', 'Aug2_EfficientNetL_468.txt', 'ResNest269_E35.txt')
+0.9532396468100982, ('Aug1_EfficientNetL_384.txt', 'Aug1_FocalLoss.txt', 'Aug1_ResNest_E48.txt', 'Aug1_SoftLoss.txt', 'Aug2_EfficientNetL_468.txt', 'ResNest269_E35.txt')
+0.9549807237905733, ('Aug1_EfficientNetL_384.txt', 'Aug1_Norm.txt', 'Aug1_ResNest_E48.txt', 'Aug1_SoftLoss.txt', 'Aug2_EfficientNetL_468.txt', 'ResNest269_E35.txt')
+0.9528665588857107, ('Aug1_FocalLoss.txt', 'Aug1_Norm.txt', 'Aug1_ResNest_E48.txt', 'Aug1_SoftLoss.txt', 'Aug2_EfficientNetL_468.txt', 'ResNest269_E35.txt')
+0.9544832732247233, ('Aug1_EfficientNetL_384.txt', 'Aug1_FocalLoss.txt', 'Aug1_Norm.txt', 'Aug1_ResNest_E48.txt', 'Aug1_SoftLoss.txt', 'Aug2_EfficientNetL_468.txt', 'ResNest269_E35.txt')
+0.9523691083198608, ('Aug1_EfficientNetL_384.txt', 'Aug1_FocalLoss.txt', 'Aug1_Norm.txt', 'Aug1_ResNest_E48.txt', 'Aug1_SoftLoss.txt')
+0.9521203830369357, ('Aug1_EfficientNetL_384.txt', 'Aug1_FocalLoss.txt', 'Aug1_Norm.txt', 'Aug1_ResNest_E48.txt', 'Aug2_EfficientNetL_468.txt')
+0.9539858226588733, ('Aug1_EfficientNetL_384.txt', 'Aug1_FocalLoss.txt', 'Aug1_Norm.txt', 'Aug1_ResNest_E48.txt', 'ResNest269_E35.txt')
+0.9514985698296232, ('Aug1_EfficientNetL_384.txt', 'Aug1_FocalLoss.txt', 'Aug1_Norm.txt', 'Aug1_SoftLoss.txt', 'Aug2_EfficientNetL_468.txt')
+0.9528665588857107, ('Aug1_EfficientNetL_384.txt', 'Aug1_FocalLoss.txt', 'Aug1_Norm.txt', 'Aug1_SoftLoss.txt', 'ResNest269_E35.txt')
+0.9532396468100982, ('Aug1_EfficientNetL_384.txt', 'Aug1_FocalLoss.txt', 'Aug1_Norm.txt', 'Aug2_EfficientNetL_468.txt', 'ResNest269_E35.txt')
+0.9513742071881607, ('Aug1_EfficientNetL_384.txt', 'Aug1_FocalLoss.txt', 'Aug1_ResNest_E48.txt', 'Aug1_SoftLoss.txt', 'Aug2_EfficientNetL_468.txt')
+0.9538614600174108, ('Aug1_EfficientNetL_384.txt', 'Aug1_FocalLoss.txt', 'Aug1_ResNest_E48.txt', 'Aug1_SoftLoss.txt', 'ResNest269_E35.txt')
+0.9528665588857107, ('Aug1_EfficientNetL_384.txt', 'Aug1_FocalLoss.txt', 'Aug1_ResNest_E48.txt', 'Aug2_EfficientNetL_468.txt', 'ResNest269_E35.txt')
+0.9526178336027857, ('Aug1_EfficientNetL_384.txt', 'Aug1_FocalLoss.txt', 'Aug1_SoftLoss.txt', 'Aug2_EfficientNetL_468.txt', 'ResNest269_E35.txt')
+0.9519960203954732, ('Aug1_EfficientNetL_384.txt', 'Aug1_Norm.txt', 'Aug1_ResNest_E48.txt', 'Aug1_SoftLoss.txt', 'Aug2_EfficientNetL_468.txt')
+0.9544832732247233, ('Aug1_EfficientNetL_384.txt', 'Aug1_Norm.txt', 'Aug1_ResNest_E48.txt', 'Aug1_SoftLoss.txt', 'ResNest269_E35.txt')
+0.9551050864320358, ('Aug1_EfficientNetL_384.txt', 'Aug1_Norm.txt', 'Aug1_ResNest_E48.txt', 'Aug2_EfficientNetL_468.txt', 'ResNest269_E35.txt')
+0.9551050864320358, ('Aug1_EfficientNetL_384.txt', 'Aug1_Norm.txt', 'Aug1_SoftLoss.txt', 'Aug2_EfficientNetL_468.txt', 'ResNest269_E35.txt')
+0.9539858226588733, ('Aug1_EfficientNetL_384.txt', 'Aug1_ResNest_E48.txt', 'Aug1_SoftLoss.txt', 'Aug2_EfficientNetL_468.txt', 'ResNest269_E35.txt')
+0.9507523939808481, ('Aug1_FocalLoss.txt', 'Aug1_Norm.txt', 'Aug1_ResNest_E48.txt', 'Aug1_SoftLoss.txt', 'Aug2_EfficientNetL_468.txt')
+0.9526178336027857, ('Aug1_FocalLoss.txt', 'Aug1_Norm.txt', 'Aug1_ResNest_E48.txt', 'Aug1_SoftLoss.txt', 'ResNest269_E35.txt')
+0.9539858226588733, ('Aug1_FocalLoss.txt', 'Aug1_Norm.txt', 'Aug1_ResNest_E48.txt', 'Aug2_EfficientNetL_468.txt', 'ResNest269_E35.txt')
+0.9512498445466981, ('Aug1_FocalLoss.txt', 'Aug1_Norm.txt', 'Aug1_SoftLoss.txt', 'Aug2_EfficientNetL_468.txt', 'ResNest269_E35.txt')
+0.9528665588857107, ('Aug1_FocalLoss.txt', 'Aug1_ResNest_E48.txt', 'Aug1_SoftLoss.txt', 'Aug2_EfficientNetL_468.txt', 'ResNest269_E35.txt')
+0.9534883720930233, ('Aug1_Norm.txt', 'Aug1_ResNest_E48.txt', 'Aug1_SoftLoss.txt', 'Aug2_EfficientNetL_468.txt', 'ResNest269_E35.txt')
+0.9468971520955105, ('Aug1_EfficientNetL_384.txt', 'Aug1_FocalLoss.txt', 'Aug1_Norm.txt')
+0.9471458773784355, ('Aug1_EfficientNetL_384.txt', 'Aug1_FocalLoss.txt', 'Aug1_ResNest_E48.txt')
+0.946275338888198, ('Aug1_EfficientNetL_384.txt', 'Aug1_FocalLoss.txt', 'Aug1_SoftLoss.txt')
+0.946026613605273, ('Aug1_EfficientNetL_384.txt', 'Aug1_FocalLoss.txt', 'Aug2_EfficientNetL_468.txt')
+0.9501305807735356, ('Aug1_EfficientNetL_384.txt', 'Aug1_FocalLoss.txt', 'ResNest269_E35.txt')
+0.9491356796418355, ('Aug1_EfficientNetL_384.txt', 'Aug1_Norm.txt', 'Aug1_ResNest_E48.txt')
+0.9482651411515981, ('Aug1_EfficientNetL_384.txt', 'Aug1_Norm.txt', 'Aug1_SoftLoss.txt')
+0.9505036686979231, ('Aug1_EfficientNetL_384.txt', 'Aug1_Norm.txt', 'Aug2_EfficientNetL_468.txt')
+0.9531152841686358, ('Aug1_EfficientNetL_384.txt', 'Aug1_Norm.txt', 'ResNest269_E35.txt')
+0.9491356796418355, ('Aug1_EfficientNetL_384.txt', 'Aug1_ResNest_E48.txt', 'Aug1_SoftLoss.txt')
+0.9481407785101356, ('Aug1_EfficientNetL_384.txt', 'Aug1_ResNest_E48.txt', 'Aug2_EfficientNetL_468.txt')
+0.9514985698296232, ('Aug1_EfficientNetL_384.txt', 'Aug1_ResNest_E48.txt', 'ResNest269_E35.txt')
+0.9466484268125855, ('Aug1_EfficientNetL_384.txt', 'Aug1_SoftLoss.txt', 'Aug2_EfficientNetL_468.txt')
+0.9521203830369357, ('Aug1_EfficientNetL_384.txt', 'Aug1_SoftLoss.txt', 'ResNest269_E35.txt')
+0.9496331302076856, ('Aug1_EfficientNetL_384.txt', 'Aug2_EfficientNetL_468.txt', 'ResNest269_E35.txt')
+0.9463997015296605, ('Aug1_FocalLoss.txt', 'Aug1_Norm.txt', 'Aug1_ResNest_E48.txt')
+0.9446586245491855, ('Aug1_FocalLoss.txt', 'Aug1_Norm.txt', 'Aug1_SoftLoss.txt')
+0.9456535256808855, ('Aug1_FocalLoss.txt', 'Aug1_Norm.txt', 'Aug2_EfficientNetL_468.txt')
+0.9491356796418355, ('Aug1_FocalLoss.txt', 'Aug1_Norm.txt', 'ResNest269_E35.txt')
+0.946524064171123, ('Aug1_FocalLoss.txt', 'Aug1_ResNest_E48.txt', 'Aug1_SoftLoss.txt')
+0.9463997015296605, ('Aug1_FocalLoss.txt', 'Aug1_ResNest_E48.txt', 'Aug2_EfficientNetL_468.txt')
+0.9505036686979231, ('Aug1_FocalLoss.txt', 'Aug1_ResNest_E48.txt', 'ResNest269_E35.txt')
+0.9445342619077229, ('Aug1_FocalLoss.txt', 'Aug1_SoftLoss.txt', 'Aug2_EfficientNetL_468.txt')
+0.946275338888198, ('Aug1_FocalLoss.txt', 'Aug1_SoftLoss.txt', 'ResNest269_E35.txt')
+0.948762591717448, ('Aug1_FocalLoss.txt', 'Aug2_EfficientNetL_468.txt', 'ResNest269_E35.txt')
+0.9491356796418355, ('Aug1_Norm.txt', 'Aug1_ResNest_E48.txt', 'Aug1_SoftLoss.txt')
+0.9492600422832981, ('Aug1_Norm.txt', 'Aug1_ResNest_E48.txt', 'Aug2_EfficientNetL_468.txt')
+0.9511254819052357, ('Aug1_Norm.txt', 'Aug1_ResNest_E48.txt', 'ResNest269_E35.txt')
+0.9459022509638104, ('Aug1_Norm.txt', 'Aug1_SoftLoss.txt', 'Aug2_EfficientNetL_468.txt')
+0.9498818554906107, ('Aug1_Norm.txt', 'Aug1_SoftLoss.txt', 'ResNest269_E35.txt')
+0.9522447456783982, ('Aug1_Norm.txt', 'Aug2_EfficientNetL_468.txt', 'ResNest269_E35.txt')
+0.9463997015296605, ('Aug1_ResNest_E48.txt', 'Aug1_SoftLoss.txt', 'Aug2_EfficientNetL_468.txt')
+0.9497574928491481, ('Aug1_ResNest_E48.txt', 'Aug1_SoftLoss.txt', 'ResNest269_E35.txt')
+0.9505036686979231, ('Aug1_ResNest_E48.txt', 'Aug2_EfficientNetL_468.txt', 'ResNest269_E35.txt')
+0.9495087675662232, ('Aug1_SoftLoss.txt', 'Aug2_EfficientNetL_468.txt', 'ResNest269_E35.txt')
+0.9313518219126974, ('Aug1_EfficientNetL_384.txt', 'Aug1_FocalLoss.txt')
+0.9404302947394603, ('Aug1_EfficientNetL_384.txt', 'Aug1_Norm.txt')
+0.9393110309662978, ('Aug1_EfficientNetL_384.txt', 'Aug1_ResNest_E48.txt')
+0.9353314264394976, ('Aug1_EfficientNetL_384.txt', 'Aug1_SoftLoss.txt')
+0.9373212287028977, ('Aug1_EfficientNetL_384.txt', 'Aug2_EfficientNetL_468.txt')
+0.9501305807735356, ('Aug0_ResNet.txt', 'Aug1_EfficientNetL_384.txt', 'Aug1_FocalLoss.txt', 'Aug1_Norm.txt', 'Aug1_ResNest_E48.txt')
+0.9513742071881607, ('Aug0_ResNet.txt', 'Aug1_EfficientNetL_384.txt', 'Aug1_FocalLoss.txt', 'Aug1_Norm.txt', 'Aug1_SoftLoss.txt')
+0.9501305807735356, ('Aug0_ResNet.txt', 'Aug1_EfficientNetL_384.txt', 'Aug1_FocalLoss.txt', 'Aug1_Norm.txt', 'Aug1_ResNest_E48.txt')
+your submission is too frequent!, ('Aug0_ResNet.txt', 'Aug1_EfficientNetL_384.txt', 'Aug1_FocalLoss.txt', 'Aug1_Norm.txt', 'Aug1_SoftLoss.txt')
+0.9501305807735356, ('Aug0_ResNet.txt', 'Aug1_EfficientNetL_384.txt', 'Aug1_FocalLoss.txt', 'Aug1_Norm.txt', 'Aug1_ResNest_E48.txt')
+your submission is too frequent!, ('Aug0_ResNet.txt', 'Aug1_EfficientNetL_384.txt', 'Aug1_FocalLoss.txt', 'Aug1_Norm.txt', 'Aug1_SoftLoss.txt')
+0.9501305807735356, ('Aug0_ResNet.txt', 'Aug1_EfficientNetL_384.txt', 'Aug1_FocalLoss.txt', 'Aug1_Norm.txt', 'Aug1_ResNest_E48.txt')
+your submission is too frequent!, ('Aug0_ResNet.txt', 'Aug1_EfficientNetL_384.txt', 'Aug1_FocalLoss.txt', 'Aug1_Norm.txt', 'Aug1_SoftLoss.txt')
+0.9501305807735356, ('Aug0_ResNet.txt', 'Aug1_EfficientNetL_384.txt', 'Aug1_FocalLoss.txt', 'Aug1_Norm.txt', 'Aug1_ResNest_E48.txt')
+0.9513742071881607, ('Aug0_ResNet.txt', 'Aug1_EfficientNetL_384.txt', 'Aug1_FocalLoss.txt', 'Aug1_Norm.txt', 'Aug1_SoftLoss.txt')
+0.9508767566223106, ('Aug0_ResNet.txt', 'Aug1_EfficientNetL_384.txt', 'Aug1_FocalLoss.txt', 'Aug1_Norm.txt', 'Aug2_EfficientNetL_468.txt')
+0.9510011192637732, ('Aug0_ResNet.txt', 'Aug1_EfficientNetL_384.txt', 'Aug1_FocalLoss.txt', 'Aug1_Norm.txt', 'Aug2_Lr.txt')
+0.9516229324710856, ('Aug0_ResNet.txt', 'Aug1_EfficientNetL_384.txt', 'Aug1_FocalLoss.txt', 'Aug1_Norm.txt', 'Aug2_ResNest_L200.txt')
+0.9516229324710856, ('Aug0_ResNet.txt', 'Aug1_EfficientNetL_384.txt', 'Aug1_FocalLoss.txt', 'Aug1_Norm.txt', 'ResNest269_E35.txt')
+0.9510011192637732, ('Aug0_ResNet.txt', 'Aug1_EfficientNetL_384.txt', 'Aug1_FocalLoss.txt', 'Aug1_ResNest_E48.txt', 'Aug1_SoftLoss.txt')
+0.9497574928491481, ('Aug0_ResNet.txt', 'Aug1_EfficientNetL_384.txt', 'Aug1_FocalLoss.txt', 'Aug1_ResNest_E48.txt', 'Aug2_EfficientNetL_468.txt')
+0.9510011192637732, ('Aug0_ResNet.txt', 'Aug1_EfficientNetL_384.txt', 'Aug1_FocalLoss.txt', 'Aug1_ResNest_E48.txt', 'Aug2_Lr.txt')
+0.9511254819052357, ('Aug0_ResNet.txt', 'Aug1_EfficientNetL_384.txt', 'Aug1_FocalLoss.txt', 'Aug1_ResNest_E48.txt', 'Aug2_ResNest_L200.txt')
+0.9524934709613232, ('Aug0_ResNet.txt', 'Aug1_EfficientNetL_384.txt', 'Aug1_FocalLoss.txt', 'Aug1_ResNest_E48.txt', 'ResNest269_E35.txt')
+0.9506280313393857, ('Aug0_ResNet.txt', 'Aug1_EfficientNetL_384.txt', 'Aug1_FocalLoss.txt', 'Aug1_SoftLoss.txt', 'Aug2_EfficientNetL_468.txt')
+0.9518716577540107, ('Aug0_ResNet.txt', 'Aug1_EfficientNetL_384.txt', 'Aug1_FocalLoss.txt', 'Aug1_SoftLoss.txt', 'Aug2_Lr.txt')
+0.9506280313393857, ('Aug0_ResNet.txt', 'Aug1_EfficientNetL_384.txt', 'Aug1_FocalLoss.txt', 'Aug1_SoftLoss.txt', 'Aug2_ResNest_L200.txt')
+0.9522447456783982, ('Aug0_ResNet.txt', 'Aug1_EfficientNetL_384.txt', 'Aug1_FocalLoss.txt', 'Aug1_SoftLoss.txt', 'ResNest269_E35.txt')
+0.9511254819052357, ('Aug0_ResNet.txt', 'Aug1_EfficientNetL_384.txt', 'Aug1_FocalLoss.txt', 'Aug2_EfficientNetL_468.txt', 'Aug2_Lr.txt')
+0.9508767566223106, ('Aug0_ResNet.txt', 'Aug1_EfficientNetL_384.txt', 'Aug1_FocalLoss.txt', 'Aug2_EfficientNetL_468.txt', 'Aug2_ResNest_L200.txt')
+0.9501305807735356, ('Aug0_ResNet.txt', 'Aug1_EfficientNetL_384.txt', 'Aug1_FocalLoss.txt', 'Aug1_Norm.txt', 'Aug1_ResNest_E48.txt')
+0.9523691083198608, ('Aug1_EfficientNetL_384.txt', 'Aug1_FocalLoss.txt', 'Aug1_Norm.txt', 'Aug1_ResNest_E48.txt', 'Aug1_SoftLoss.txt')
+0.9521203830369357, ('Aug1_EfficientNetL_384.txt', 'Aug1_FocalLoss.txt', 'Aug1_Norm.txt', 'Aug1_ResNest_E48.txt', 'Aug2_EfficientNetL_468.txt')
+0.9523691083198608, ('Aug1_EfficientNetL_384.txt', 'Aug1_FocalLoss.txt', 'Aug1_Norm.txt', 'Aug1_ResNest_E48.txt', 'Aug1_SoftLoss.txt')
+0.9521203830369357, ('Aug1_EfficientNetL_384.txt', 'Aug1_FocalLoss.txt', 'Aug1_Norm.txt', 'Aug1_ResNest_E48.txt', 'Aug2_EfficientNetL_468.txt')
+0.9523691083198608, ['Aug1_EfficientNetL_384.txt', 'Aug1_FocalLoss.txt', 'Aug1_Norm.txt', 'Aug1_ResNest_E48.txt', 'Aug1_SoftLoss.txt']
+0.9544832732247233, ['Aug1_EfficientNetL_384.txt', 'Aug1_FocalLoss.txt', 'Aug1_Norm.txt', 'Aug1_ResNest_E48.txt', 'Aug1_SoftLoss.txt', 'ResNest269E35.txt']
+0.9548563611491108, ['Aug1_EfficientNetL_384.txt', 'Aug1_FocalLoss.txt', 'Aug1_Norm.txt', 'Aug1_ResNest_E48.txt', 'Aug2_EfficientNetL_468.txt', 'ResNest269E35.txt']
+your submission is too frequent!, ['Aug1_EfficientNetL_384.txt', 'Aug1_FocalLoss.txt', 'Aug1_Norm.txt', 'Aug1_ResNest_E48.txt', 'ResNest269E35.txt']
+0.9539858226588733, ['Aug1_EfficientNetL_384.txt', 'Aug1_FocalLoss.txt', 'Aug1_Norm.txt', 'Aug1_ResNest_E48.txt', 'ResNest269E35.txt']
+0.9528665588857107, ['Aug1_EfficientNetL_384.txt', 'Aug1_FocalLoss.txt', 'Aug1_Norm.txt', 'Aug1_SoftLoss.txt', 'ResNest269E35.txt']
+0.9532396468100982, ['Aug1_EfficientNetL_384.txt', 'Aug1_FocalLoss.txt', 'Aug1_Norm.txt', 'Aug2_EfficientNetL_468.txt', 'ResNest269E35.txt']
+0.9551050864320358, ['Aug1_EfficientNetL_384.txt', 'Aug1_FocalLoss.txt', 'Aug1_Norm.txt', 'Aug2_ResNest_L200.txt', 'ResNest269E35.txt']
+0.9538614600174108, ['Aug1_EfficientNetL_384.txt', 'Aug1_FocalLoss.txt', 'Aug1_ResNest_E48.txt', 'Aug1_SoftLoss.txt', 'ResNest269E35.txt']
+0.9528665588857107, ['Aug1_EfficientNetL_384.txt', 'Aug1_FocalLoss.txt', 'Aug1_ResNest_E48.txt', 'Aug2_EfficientNetL_468.txt', 'ResNest269E35.txt']
+0.9541101853003358, ['Aug1_EfficientNetL_384.txt', 'Aug1_FocalLoss.txt', 'Aug1_ResNest_E48.txt', 'Aug2_ResNest_L200.txt', 'ResNest269E35.txt']
+0.9526178336027857, ['Aug1_EfficientNetL_384.txt', 'Aug1_FocalLoss.txt', 'Aug1_SoftLoss.txt', 'Aug2_EfficientNetL_468.txt', 'ResNest269E35.txt']
+0.9538614600174108, ['Aug1_EfficientNetL_384.txt', 'Aug1_FocalLoss.txt', 'Aug1_SoftLoss.txt', 'Aug2_ResNest_L200.txt', 'ResNest269E35.txt']
+0.9541101853003358, ['Aug1_EfficientNetL_384.txt', 'Aug1_FocalLoss.txt', 'Aug2_EfficientNetL_468.txt', 'Aug2_ResNest_L200.txt', 'ResNest269E35.txt']
+0.9544832732247233, ['Aug1_EfficientNetL_384.txt', 'Aug1_Norm.txt', 'Aug1_ResNest_E48.txt', 'Aug1_SoftLoss.txt', 'ResNest269E35.txt']
+0.9551050864320358, ['Aug1_EfficientNetL_384.txt', 'Aug1_Norm.txt', 'Aug1_ResNest_E48.txt', 'Aug2_EfficientNetL_468.txt', 'ResNest269E35.txt']
+0.9557268996393483, ['Aug1_EfficientNetL_384.txt', 'Aug1_Norm.txt', 'Aug1_ResNest_E48.txt', 'Aug2_ResNest_L200.txt', 'ResNest269E35.txt']
+0.9551050864320358, ['Aug1_EfficientNetL_384.txt', 'Aug1_Norm.txt', 'Aug1_SoftLoss.txt', 'Aug2_EfficientNetL_468.txt', 'ResNest269E35.txt']
+0.9559756249222734, ['Aug1_EfficientNetL_384.txt', 'Aug1_Norm.txt', 'Aug1_SoftLoss.txt', 'Aug2_ResNest_L200.txt', 'ResNest269E35.txt']
+0.9562243502051984, ['Aug1_EfficientNetL_384.txt', 'Aug1_Norm.txt', 'Aug2_EfficientNetL_468.txt', 'Aug2_ResNest_L200.txt', 'ResNest269E35.txt']
+0.9539858226588733, ['Aug1_EfficientNetL_384.txt', 'Aug1_ResNest_E48.txt', 'Aug1_SoftLoss.txt', 'Aug2_EfficientNetL_468.txt', 'ResNest269E35.txt']
+0.9543589105832608, ['Aug1_EfficientNetL_384.txt', 'Aug1_ResNest_E48.txt', 'Aug1_SoftLoss.txt', 'Aug2_ResNest_L200.txt', 'ResNest269E35.txt']
+0.9544832732247233, ['Aug1_EfficientNetL_384.txt', 'Aug1_ResNest_E48.txt', 'Aug2_EfficientNetL_468.txt', 'Aug2_ResNest_L200.txt', 'ResNest269E35.txt']
+0.9538614600174108, ['Aug1_EfficientNetL_384.txt', 'Aug1_SoftLoss.txt', 'Aug2_EfficientNetL_468.txt', 'Aug2_ResNest_L200.txt', 'ResNest269E35.txt']
+0.9526178336027857, ['Aug1_FocalLoss.txt', 'Aug1_Norm.txt', 'Aug1_ResNest_E48.txt', 'Aug1_SoftLoss.txt', 'ResNest269E35.txt']
+0.9539858226588733, ['Aug1_FocalLoss.txt', 'Aug1_Norm.txt', 'Aug1_ResNest_E48.txt', 'Aug2_EfficientNetL_468.txt', 'ResNest269E35.txt']
+0.9527421962442483, ['Aug1_FocalLoss.txt', 'Aug1_Norm.txt', 'Aug1_ResNest_E48.txt', 'Aug2_ResNest_L200.txt', 'ResNest269E35.txt']
+0.9512498445466981, ['Aug1_FocalLoss.txt', 'Aug1_Norm.txt', 'Aug1_SoftLoss.txt', 'Aug2_EfficientNetL_468.txt', 'ResNest269E35.txt']
+0.9526178336027857, ['Aug1_FocalLoss.txt', 'Aug1_Norm.txt', 'Aug1_SoftLoss.txt', 'Aug2_ResNest_L200.txt', 'ResNest269E35.txt']
+0.9539858226588733, ['Aug1_FocalLoss.txt', 'Aug1_Norm.txt', 'Aug2_EfficientNetL_468.txt', 'Aug2_ResNest_L200.txt', 'ResNest269E35.txt']
+0.9528665588857107, ['Aug1_FocalLoss.txt', 'Aug1_ResNest_E48.txt', 'Aug1_SoftLoss.txt', 'Aug2_EfficientNetL_468.txt', 'ResNest269E35.txt']
+0.9532396468100982, ['Aug1_FocalLoss.txt', 'Aug1_ResNest_E48.txt', 'Aug1_SoftLoss.txt', 'Aug2_ResNest_L200.txt', 'ResNest269E35.txt']
+0.9537370973759483, ['Aug1_FocalLoss.txt', 'Aug1_ResNest_E48.txt', 'Aug2_EfficientNetL_468.txt', 'Aug2_ResNest_L200.txt', 'ResNest269E35.txt']
+0.9529909215271732, ['Aug1_FocalLoss.txt', 'Aug1_SoftLoss.txt', 'Aug2_EfficientNetL_468.txt', 'Aug2_ResNest_L200.txt', 'ResNest269E35.txt']
+0.9534883720930233, ['Aug1_Norm.txt', 'Aug1_ResNest_E48.txt', 'Aug1_SoftLoss.txt', 'Aug2_EfficientNetL_468.txt', 'ResNest269E35.txt']
+0.9536127347344857, ['Aug1_Norm.txt', 'Aug1_ResNest_E48.txt', 'Aug1_SoftLoss.txt', 'Aug2_ResNest_L200.txt', 'ResNest269E35.txt']
+0.9548563611491108, ['Aug1_Norm.txt', 'Aug1_ResNest_E48.txt', 'Aug2_EfficientNetL_468.txt', 'Aug2_ResNest_L200.txt', 'ResNest269E35.txt']
+0.9547319985076483, ['Aug1_Norm.txt', 'Aug1_SoftLoss.txt', 'Aug2_EfficientNetL_468.txt', 'Aug2_ResNest_L200.txt', 'ResNest269E35.txt']
+0.9539858226588733, ['Aug1_ResNest_E48.txt', 'Aug1_SoftLoss.txt', 'Aug2_EfficientNetL_468.txt', 'Aug2_ResNest_L200.txt', 'ResNest269E35.txt']
+0.9544832732247233, ['Aug1_EfficientNetL_384.txt', 'Aug1_FocalLoss.txt', 'Aug1_Norm.txt', 'Aug1_ResNest_E48.txt', 'Aug1_SoftLoss.txt', 'ResNest269E35.txt']
+0.9548563611491108, ['Aug1_EfficientNetL_384.txt', 'Aug1_FocalLoss.txt', 'Aug1_Norm.txt', 'Aug1_ResNest_E48.txt', 'Aug2_EfficientNetL_468.txt', 'ResNest269E35.txt']
+0.9558512622808109, ['Aug1_EfficientNetL_384.txt', 'Aug1_FocalLoss.txt', 'Aug1_Norm.txt', 'Aug1_ResNest_E48.txt', 'Aug2_ResNest_L200.txt', 'ResNest269E35.txt']
+0.9537370973759483, ['Aug1_EfficientNetL_384.txt', 'Aug1_FocalLoss.txt', 'Aug1_Norm.txt', 'Aug1_SoftLoss.txt', 'Aug2_EfficientNetL_468.txt', 'ResNest269E35.txt']
+0.9549807237905733, ['Aug1_EfficientNetL_384.txt', 'Aug1_FocalLoss.txt', 'Aug1_Norm.txt', 'Aug1_SoftLoss.txt', 'Aug2_ResNest_L200.txt', 'ResNest269E35.txt']
+0.9560999875637358, ['Aug1_EfficientNetL_384.txt', 'Aug1_FocalLoss.txt', 'Aug1_Norm.txt', 'Aug2_EfficientNetL_468.txt', 'Aug2_ResNest_L200.txt', 'ResNest269E35.txt']
+0.9532396468100982, ['Aug1_EfficientNetL_384.txt', 'Aug1_FocalLoss.txt', 'Aug1_ResNest_E48.txt', 'Aug1_SoftLoss.txt', 'Aug2_EfficientNetL_468.txt', 'ResNest269E35.txt']
+0.9546076358661858, ['Aug1_EfficientNetL_384.txt', 'Aug1_FocalLoss.txt', 'Aug1_ResNest_E48.txt', 'Aug1_SoftLoss.txt', 'Aug2_ResNest_L200.txt', 'ResNest269E35.txt']
+0.9552294490734983, ['Aug1_EfficientNetL_384.txt', 'Aug1_FocalLoss.txt', 'Aug1_ResNest_E48.txt', 'Aug2_EfficientNetL_468.txt', 'Aug2_ResNest_L200.txt', 'ResNest269E35.txt']
+0.9539858226588733, ['Aug1_EfficientNetL_384.txt', 'Aug1_FocalLoss.txt', 'Aug1_SoftLoss.txt', 'Aug2_EfficientNetL_468.txt', 'Aug2_ResNest_L200.txt', 'ResNest269E35.txt']
+0.9549807237905733, ['Aug1_EfficientNetL_384.txt', 'Aug1_Norm.txt', 'Aug1_ResNest_E48.txt', 'Aug1_SoftLoss.txt', 'Aug2_EfficientNetL_468.txt', 'ResNest269E35.txt']
+0.9559756249222734, ['Aug1_EfficientNetL_384.txt', 'Aug1_Norm.txt', 'Aug1_ResNest_E48.txt', 'Aug1_SoftLoss.txt', 'Aug2_ResNest_L200.txt', 'ResNest269E35.txt']
+0.9564730754881233, ['Aug1_EfficientNetL_384.txt', 'Aug1_Norm.txt', 'Aug1_ResNest_E48.txt', 'Aug2_EfficientNetL_468.txt', 'Aug2_ResNest_L200.txt', 'ResNest269E35.txt']
+0.9558512622808109, ['Aug1_EfficientNetL_384.txt', 'Aug1_Norm.txt', 'Aug1_SoftLoss.txt', 'Aug2_EfficientNetL_468.txt', 'Aug2_ResNest_L200.txt', 'ResNest269E35.txt']
+0.9556025369978859, ['Aug1_EfficientNetL_384.txt', 'Aug1_ResNest_E48.txt', 'Aug1_SoftLoss.txt', 'Aug2_EfficientNetL_468.txt', 'Aug2_ResNest_L200.txt', 'ResNest269E35.txt']
+0.9528665588857107, ['Aug1_FocalLoss.txt', 'Aug1_Norm.txt', 'Aug1_ResNest_E48.txt', 'Aug1_SoftLoss.txt', 'Aug2_EfficientNetL_468.txt', 'ResNest269E35.txt']
+0.9536127347344857, ['Aug1_FocalLoss.txt', 'Aug1_Norm.txt', 'Aug1_ResNest_E48.txt', 'Aug1_SoftLoss.txt', 'Aug2_ResNest_L200.txt', 'ResNest269E35.txt']
+0.9543589105832608, ['Aug1_FocalLoss.txt', 'Aug1_Norm.txt', 'Aug1_ResNest_E48.txt', 'Aug2_EfficientNetL_468.txt', 'Aug2_ResNest_L200.txt', 'ResNest269E35.txt']
+0.9531152841686358, ['Aug1_FocalLoss.txt', 'Aug1_Norm.txt', 'Aug1_SoftLoss.txt', 'Aug2_EfficientNetL_468.txt', 'Aug2_ResNest_L200.txt', 'ResNest269E35.txt']
+0.9546076358661858, ['Aug1_FocalLoss.txt', 'Aug1_ResNest_E48.txt', 'Aug1_SoftLoss.txt', 'Aug2_EfficientNetL_468.txt', 'Aug2_ResNest_L200.txt', 'ResNest269E35.txt']
+0.9541101853003358, ['Aug1_Norm.txt', 'Aug1_ResNest_E48.txt', 'Aug1_SoftLoss.txt', 'Aug2_EfficientNetL_468.txt', 'Aug2_ResNest_L200.txt', 'ResNest269E35.txt']
+0.9544832732247233, ['Aug1_EfficientNetL_384.txt', 'Aug1_FocalLoss.txt', 'Aug1_Norm.txt', 'Aug1_ResNest_E48.txt', 'Aug1_SoftLoss.txt', 'Aug2_EfficientNetL_468.txt', 'ResNest269E35.txt']
+0.9559756249222734, ['Aug1_EfficientNetL_384.txt', 'Aug1_FocalLoss.txt', 'Aug1_Norm.txt', 'Aug1_ResNest_E48.txt', 'Aug1_SoftLoss.txt', 'Aug2_ResNest_L200.txt', 'ResNest269E35.txt']
+0.9569705260539734, ['Aug1_EfficientNetL_384.txt', 'Aug1_FocalLoss.txt', 'Aug1_Norm.txt', 'Aug1_ResNest_E48.txt', 'Aug2_EfficientNetL_468.txt', 'Aug2_ResNest_L200.txt', 'ResNest269E35.txt']
+0.9556025369978859, ['Aug1_EfficientNetL_384.txt', 'Aug1_FocalLoss.txt', 'Aug1_Norm.txt', 'Aug1_SoftLoss.txt', 'Aug2_EfficientNetL_468.txt', 'Aug2_ResNest_L200.txt', 'ResNest269E35.txt']
+0.9557268996393483, ['Aug1_EfficientNetL_384.txt', 'Aug1_FocalLoss.txt', 'Aug1_ResNest_E48.txt', 'Aug1_SoftLoss.txt', 'Aug2_EfficientNetL_468.txt', 'Aug2_ResNest_L200.txt', 'ResNest269E35.txt']
+0.9568461634125108, ['Aug1_EfficientNetL_384.txt', 'Aug1_Norm.txt', 'Aug1_ResNest_E48.txt', 'Aug1_SoftLoss.txt', 'Aug2_EfficientNetL_468.txt', 'Aug2_ResNest_L200.txt', 'ResNest269E35.txt']
+0.9557268996393483, ['Aug1_FocalLoss.txt', 'Aug1_Norm.txt', 'Aug1_ResNest_E48.txt', 'Aug1_SoftLoss.txt', 'Aug2_EfficientNetL_468.txt', 'Aug2_ResNest_L200.txt', 'ResNest269E35.txt']
+0.9563487128466609, ['Aug1_EfficientNetL_384.txt', 'Aug1_FocalLoss.txt', 'Aug1_Norm.txt', 'Aug1_ResNest_E48.txt', 'Aug1_SoftLoss.txt', 'Aug2_EfficientNetL_468.txt', 'Aug2_ResNest_L200.txt', 'ResNest269E35.txt']

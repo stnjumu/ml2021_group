@@ -26,6 +26,7 @@ torch.set_default_tensor_type('torch.FloatTensor')
 
 # 参数字典
 paramDict = {
+    'discription': 'resnest101e训练2', # 一句话描述此次训练
     'verbose': False, # 调试
     'valid_enable': True, # 是否划分一部分数据集为验证集
     'valid_epoches': 1, # 前valid_epoches个epoch验证不提交，后面的epoch提交不验证；
@@ -137,6 +138,7 @@ class Trainer():
         # Logger.setup_logger('val',self.logPath,'val', level=logging.INFO)
         Logger.setup_logger('val_or_test',self.logPath,'val_or_test', level=logging.INFO, screen=False)
         self.logger_base = logging.getLogger('base')
+        self.logger_base.info(paramDict['discription'])
         # self.logger_val = logging.getLogger('val')
         self.logger_val_or_test = logging.getLogger('val_or_test')
         for k,v in paramDict.items():

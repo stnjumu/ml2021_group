@@ -1,0 +1,2 @@
+0.9562243502051984, ['Aug1_EfficientNetL_384.txt', 'Aug1_Norm.txt', 'Aug2_EfficientNetL_468.txt', 'Aug2_ResNest_L200.txt', 'ResNest269E35.txt']
+0.9569705260539734, ['Aug1_EfficientNetL_384.txt', 'Aug1_FocalLoss.txt', 'Aug1_Norm.txt', 'Aug1_ResNest_E48.txt', 'Aug2_EfficientNetL_468.txt', 'Aug2_ResNest_L200.txt', 'ResNest269E35.txt']
