@@ -64,7 +64,7 @@ if __name__ == "__main__":
     sid = "ZY2106345"
     # 改成你的口令
     token = "gagaga"
-    dir = 'log/Train_211230_0344/result'
+    dir = './log/Train_211229_1334/result'
     for file in os.listdir(dir):
         if file == 'result.txt':
             continue
