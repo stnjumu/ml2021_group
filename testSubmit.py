@@ -11,6 +11,7 @@ import numpy as np
 from tqdm import tqdm
 
 import time
+import timm
 import os
 import logging
 from datetime import datetime
@@ -52,7 +53,7 @@ def run(args):
     paramDict = {
         # 训练设置
         'batch_size': 12, 
-        'model': EffNetV2(), # 自定义模型
+        'model': timm.create_model('resnest200e', pretrained=True, num_classes=196), # 自定义模型
         'dataset': DatasetTorch, # 自定义数据库
         'datasetDir': './dataset/', # 数据集存放路径
         'checkpointPath':  args.model, # 检查点路径
