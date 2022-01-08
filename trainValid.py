@@ -1,13 +1,17 @@
 from ModelLib.swin import SwinNet
-from ModelLib.efficientnet_v2_pretrain import *
+from ModelLib.efficientnet_v2_pretrain import EffNetV2
+from ModelLib.efficientnet_v2_aux import EffNetV2_AUX
+from ModelLib.cait import CaiT
+from ModelLib.tresnet_v2 import TResnetL_V2
 from UtilLib.Read_annos_mat import read_annos_to_np
 from ModelLib.Model1 import Model1
 from ModelLib.resnet101 import RenNet101_head
 from ModelLib.resnet import resnet50
-from DatasetLib.DatasetTorch import DatasetTorch
+from DatasetLib.Dataset1 import Dataset1
+from DatasetLib.DatasetTorch import DatasetTorch, LabelDataset
 import UtilLib.logger as Logger
 from UtilLib.loss import FocalLoss, SoftCrossEntropyLoss
-
+import timm
 import torch
 import torch.utils.data as torchData
 import matplotlib.pyplot as plt
@@ -15,31 +19,30 @@ import numpy as np
 import logging
 from tensorboardX import SummaryWriter
 import os
-from tqdm import tqdm
-import time
 from datetime import datetime
+from tqdm import tqdm
 
-os.environ["CUDA_VISIBLE_DEVICES"]="0"
+os.environ["CUDA_VISIBLE_DEVICES"]="5"
 torch.set_default_tensor_type('torch.FloatTensor')
 
 # 参数字典
 paramDict = {
-    'verbose': True, # 调试
+    'verbose': False, # 调试
     'valid_enable': False, # 是否划分一部分数据集为验证集
     'test_enable': True, # 是否测试，测试默认提交到leaderboard
     'tb_logger': True, # 是否开启tensor logger
-    'batch_size': 12, 
+    'batch_size': 12,  
     'learning_rate': 1e-4,
     'lr_scheduler_enable' : True,
-    'epoches': 50, 
-    # 'loss': torch.nn.CrossEntropyLoss(),
-    'loss': FocalLoss(),
+    'epoches': 100, 
+    'loss': torch.nn.CrossEntropyLoss(),
+    # 'loss': FocalLoss(),
+    # 'loss': SoftCrossEntropyLoss(),
 
     # 模型设置
-    # 'model': EffNetV2(), # 自定义模型
-    'model': timm.create_model('tresnet_xl_448', pretrained= True, num_classes = 196), # 自定义模型
+    'model': timm.create_model('resnest200e', pretrained=True, num_classes=196), # 自定义模型
     'resume_training': False, # 继续训练
-    'checkpointPath': './checkpoint/stanford_cars_tresnet-l-v2_96_27.pth', # 检查点名称
+    'checkpointPath': './log/Train_211228_1445/checkpoint/checkpoint_epoch5_freq.pth', # 检查点名称
     'ignore_optim_flag': False, # 忽略部分预训练模型参数
     'ignore_backbone_name': 'backbone', # 要忽略的预训练参数名称
     
@@ -88,7 +91,6 @@ class Trainer():
         data_all = read_annos_to_np(cars_train_annos_Path)
 
         # 切分训练和验证
-        np.random.shuffle(data_all) # 随机排序
         train_val_ratio = 1
         if self.valid_enable:
             train_val_ratio = 0.8
@@ -138,10 +140,14 @@ class Trainer():
         model = paramDict['model']
         if paramDict['resume_training']:
             checkpoint = torch.load(os.path.join(paramDict['checkpointPath']), map_location='cpu')
-            model.load_state_dict(checkpoint['model'], strict=False)
+            if 'model' in checkpoint:
+                model.load_state_dict(checkpoint['model'], strict=False)
+            else:
+                model.load_state_dict(checkpoint, strict=False)
+
             self.logger_base.info(
-                    'Load model from {}/{}.'.format(paramDict['checkpointPath']))
-        self.model = model.cuda()
+                    'Load model from {}.'.format(paramDict['checkpointPath']))
+        self.model = model.cuda() # 模型放GPU上；
 
         # 训练
         self.loss_fn = paramDict['loss']
@@ -160,8 +166,9 @@ class Trainer():
             self.optimizer = torch.optim.Adam(params=optim_params, lr=self.lr, betas=(0.9, 0.999), eps=1e-08, weight_decay=1e-4)
         else:
             self.optimizer = torch.optim.Adam(params=model.parameters(), lr=self.lr, betas=(0.9, 0.999), eps=1e-08, weight_decay=1e-4)
+            # self.optimizer = torch.optim.SGD(model.parameters(), lr = self.lr, momentum=0.9)
         if paramDict['lr_scheduler_enable']:
-            self.lr_scheduler = torch.optim.lr_scheduler.CyclicLR(self.optimizer,base_lr=1e-6, max_lr=1e-4, gamma=0.99994, cycle_momentum=False)
+            self.lr_scheduler = torch.optim.lr_scheduler.CyclicLR(self.optimizer,base_lr=1e-7, max_lr=1e-4, gamma=0.99994, cycle_momentum=False)
         
     def _train(self, epoch):
         self.model.train()
@@ -173,6 +180,7 @@ class Trainer():
             self.optimizer.zero_grad()
             labels_predict = self.model(imgs)
             loss = self.loss_fn(labels_predict, labels)
+            loss = (loss-0.16).abs()+0.16
             loss.backward()
             self.optimizer.step()
             if paramDict['lr_scheduler_enable']:
@@ -230,8 +238,7 @@ class Trainer():
                 checkpointName = "checkpoint_epoch" + str(epoch) +'_acc'+str(acc)+ '.pth'
                 print("Saving checkpoint:", checkpointName)
                 torch.save(self.model.state_dict(), os.path.join(self.checkpointSaveDir ,checkpointName))
-                if not self.verbose:
-                    self._test(checkpointPath = os.path.join(self.checkpointSaveDir ,checkpointName), epoch=epoch)
+                self._test(checkpointPath = os.path.join(self.checkpointSaveDir ,checkpointName), epoch=epoch)
 
     def _test(self, checkpointPath, epoch, gpu_id=1):
         if self.test_enable:

@@ -6,9 +6,10 @@ import os
 import numpy as np
 from torchvision import transforms
 from PIL import Image
-from .auto_augment import AutoAugment, ImageNetAutoAugment
+from UtilLib.Deal_label_map import Deal_label_map
+from .auto_augment import AutoAugment, ImageNetAutoAugment, ImageNetPolicy
 class DatasetTorch(torchData.Dataset):
-    def __init__(self, dir, data, split='train', aug=True, img_size=[384,384]):
+    def __init__(self, dir, data, split='train', aug=True, img_size=[320,320]):
         # data numpy二维数组，
         # [('bbox_x1', 'O'), ('bbox_y1', 'O'), ('bbox_x2', 'O'), ('bbox_y2', 'O'), ('class', 'O'), ('fname', 'O')] 
         # 前两项为：
@@ -25,7 +26,8 @@ class DatasetTorch(torchData.Dataset):
             self.data = data
             self.tfs = transforms.Compose([
                  transforms.Resize((img_size[0], img_size[1])),
-                 ImageNetAutoAugment(),
+                 AutoAugment(),
+                # ImageNetPolicy(),
                  transforms.ToTensor(),
                 #  transforms.Normalize(
                 #     mean=[0.5, 0.5, 0.5], std=[0.5,0.5, 0.5]),
@@ -59,6 +61,32 @@ class DatasetTorch(torchData.Dataset):
     def __len__(self):
         return np.shape(self.data)[0]
 
+
+class LabelDataset(DatasetTorch):
+    def __init__(self, dir, data, split='train', aug=True, img_size=[384,384], label_choise=1):
+        super().__init__(dir, data, split, aug, img_size)
+        self.label_map = Deal_label_map()
+        self.label_choise = label_choise # 0为具体类别， 1为品牌，2为年份
+    def __getitem__(self, index):
+        img_path = os.path.join(self.dir, self.data[index][-1]) # dir + '00001.jpg'
+        x = [int(self.data[index][0]), int(self.data[index][2])]
+        y = [int(self.data[index][1]), int(self.data[index][3])]
+        img = Image.open(img_path).convert("RGB")
+        img = self.tfs(img.crop([x[0],y[0],x[1],y[1]]))
+
+        if self.split != 'test':
+            label = self.data[index][4]
+            if self.label_choise == 1:
+                label, _ = self.label_map.get_grand_year(int(label)-1)
+            elif self.label_choise == 2:
+                 _, label = self.label_map.get_grand_year(int(label)-1)
+            label = torch.from_numpy(label).long()
+            return img, label
+        else:
+            return img, str(self.data[index][-1])
+    
+    def __len__(self):
+        return np.shape(self.data)[0]
 
 # 测试Dataset类：
 import sys 

@@ -36,11 +36,11 @@ class FocalLoss(nn.Module):
         else: return loss.sum()
 
 class SoftCrossEntropyLoss(nn.Module):
-    def __init__(self, weight=0.8, num_classesnum_class=196):
+    def __init__(self, label_path= 'dataset/label_map.txt', weight=0.8, num_classes=196):
         super(SoftCrossEntropyLoss, self).__init__()
         self.weight = weight
         self.num_classes = num_classes
-        with open('label_map.txt', 'r') as f:
+        with open(label_path, 'r') as f:
             idBrand = {}
             for line in f:
                 id, brand= line.split(' ')[:2]
@@ -51,30 +51,32 @@ class SoftCrossEntropyLoss(nn.Module):
                 for other in range(0, num_classes):
                     arr[other] = int(idBrand[id]==idBrand[other])
                 corr_map.append(arr)
-        self.corr_map = torch.from_numpy(np.array(corr_map[1])) # 标签从0开始
+        self.register_buffer("corr_map", torch.from_numpy(np.array(corr_map))) #
 
     def forward(self, input, target):
+        input = input.cpu()
+        target = target.cpu()
         if input.dim()>2:
             input = input.view(input.size(0),input.size(1),-1)  # N,C,H,W => N,C,H*W
             input = input.transpose(1,2)    # N,C,H*W => N,H*W,C
             input = input.contiguous().view(-1,input.size(2))   # N,H*W,C => N*H*W,C
         target = target.view(-1,1) # N*H*W, 1
-        soft_target = torch.index_select(self.corr_map, 0, target) # N*H*W,C
-        hard_target = torch.full((x.size()[0], self.num_classes), 0).scatter_(1, x, 1) #  N*H*W,C
-        assert soft_target.shape ==  hard_target.shape
-        last_target = hard_target*self.weight + soft_target*(1-self.weight)
+        
+        # 对该id进行 one_hot
+        hard_target = torch.full((input.size()[0], self.num_classes), 0.).scatter_(1, torch.LongTensor(target), 1.) #  N*H*W,C
+        # 选择该id的相同品牌的其他id
+        soft_target = torch.index_select(self.corr_map.to(target.device), 0, torch.LongTensor(target.flatten())) # N*H*W,C
 
+        assert soft_target.shape ==  hard_target.shape
+        last_target = hard_target*(2*self.weight-1) + soft_target*(1.0-self.weight)
         loss = torch.sum(-last_target * F.log_softmax(input, dim=-1), dim=-1)
         return loss.mean()
 
 if __name__ == '__main__':
     loss_fn = SoftCrossEntropyLoss()
-    x = torch.tensor(
-        [],
-        [],
-    )
+    x = torch.randn((2,196))
     target = torch.tensor(
         [1]
     )
-    print(loss_fn(x[0], target))
-    print(loss_fn(x[1], target))
+    print(loss_fn(x[0].view(1,196), target))
+    print(loss_fn(x[1].view(1,196), target))

@@ -11,6 +11,7 @@ import numpy as np
 from tqdm import tqdm
 
 import time
+import timm
 import os
 import logging
 from datetime import datetime
@@ -52,7 +53,7 @@ def run(args):
     paramDict = {
         # 训练设置
         'batch_size': 12, 
-        'model': EffNetV2(), # 自定义模型
+        'model': timm.create_model('resnest200e', pretrained=True, num_classes=196), # 自定义模型
         'dataset': DatasetTorch, # 自定义数据库
         'datasetDir': './dataset/', # 数据集存放路径
         'checkpointPath':  args.model, # 检查点路径
@@ -71,7 +72,7 @@ def run(args):
         model.load_state_dict(checkpoint['model'], strict=False)
     else:
         model.load_state_dict(checkpoint, strict=False)
-    model = model.cuda() 
+    model = model.cuda() # 模型放GPU上；
 
     # 数据集
     cars_test_annos_Path = os.path.join(datasetDir, 'cars_test_annos.mat')
@@ -96,8 +97,8 @@ def run(args):
         problem = "FineGrainedCar_evaluate"
         ip = "115.236.52.125"
         port = "4000"
-        sid = "ZY2106345"
-        token = "gagaga"
+        sid = "SY2106335"
+        token = "123456"
         with open(logPath) as f:
             d = list(f.readlines())
         score = submit(ip, port, sid, token, d, problem)
