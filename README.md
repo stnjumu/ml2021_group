@@ -14,13 +14,15 @@
 ## 2021年12月26, 27日
     最好test acc：74.5%
 ## 2021年12月27日
-    最好test acc: 94%
+    最好test acc: 94% efficientNet V2
     liangwei:TResnet、增加自动数据增强、增加批量提交代码，trainValid整理
-
+    Tresnet失败
+## 2022年12月31日
+    最好test acc: 94.7%，ResNeSt269e
+    7种模型投票后结果95.6%, rank 0.
 
 # TODO:
-## 更新框架代码
-### 1. 保存checkpoint添加优化器
-### 2. 训练, 验证，预测，提交
-### 3. 改进保存checkpoint逻辑，用提交成绩判断
-### 4. 改进参数字典，优化器参数，切分用random_split，Dataloader放外边
+### 1. 引入其他汽车分类数据集做预训练，例如：CompCars Dataset
+### 2. ResNeSt上不同Loss的实验并没有尝试
+### 3. 还可尝试更多的模型做集成
+### 4. 可针对此问题设计更适合的损失函数
