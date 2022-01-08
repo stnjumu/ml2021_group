@@ -1,7 +1,5 @@
-from ModelLib.swin import SwinNet
 from ModelLib.efficientnet_v2_pretrain import *
 from UtilLib.Read_annos_mat import read_annos_to_np
-from ModelLib.Model1 import Model1
 from ModelLib.resnet101 import RenNet101_head
 from ModelLib.resnet import resnet50
 from DatasetLib.DatasetTorch import DatasetTorch
@@ -13,7 +11,7 @@ import torch.utils.data as torchData
 import matplotlib.pyplot as plt
 import numpy as np
 import logging
-#from tensorboardX import SummaryWriter
+from tensorboardX import SummaryWriter
 import os
 from tqdm import tqdm
 import time
