@@ -11,7 +11,7 @@
     mu: 修复bug，代码跑起来了
     创建两个分支尝试新模型       efficientNet: ./DatasetLib/automl-master/efficientnetv2/effnetv2_model.py
                     Tresnet: ./DatasetLib/ImageNet21K-main/src_files/models/tresnet/tresnet.py
-## 2021年12月26, 27日
+## 2021年12月26日
     最好test acc：74.5%
 ## 2021年12月27日
     最好test acc: 94% efficientNet V2
@@ -20,6 +20,7 @@
 ## 2022年12月31日
     最好test acc: 94.7%，ResNeSt269e
     7种模型投票后结果95.6%, rank 0.
+    ![团队排名](resources/img/Rank 2021-12-30 IRIP_0.png)
 
 # TODO:
 ### 1. 引入其他汽车分类数据集做预训练，例如：CompCars Dataset
