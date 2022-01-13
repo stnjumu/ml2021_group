@@ -30,6 +30,7 @@
 
     最好test acc: 94.7%，ResNeSt269e
     7种模型投票后结果95.6%, rank 0.
+
 ![image](./resources/img/Rank_2021-12-30_IRIP_0.png)
 
 ## TODO
